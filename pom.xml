@@ -12,7 +12,7 @@
 	<artifactId>aprenda-mais</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>aprenda-mais</name>
-	<description>Demo project for Spring Boot</description>
+	<description>Projeto criado em função da faculdade USJT - UNIMONTE, onde o propósito é auxiliar pessoas com um baixo conhecimento nas tecnologias básicas da atualidade.</description>
 	<properties>
 		<java.version>17</java.version>
 	</properties>
