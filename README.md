@@ -19,6 +19,16 @@ curl --location --request POST 'http://localhost:8080/usuario/novo' \
 
 ## Response:
 ```
+{
+    "nome": "Kaique Araujo Pinholato Ribeiro",
+    "cpf": "11122233344",
+    "telefone": 999999999,
+    "ddd": 13,
+    "email": "kaiquepinho2010@hotmail.com",
+    "dtNascimento": "2003-03-26T00:00:00.000+00:00",
+    "cep": 11325060,
+    "logradouro": "Rua Teste da Silva Junior 1"
+}
 ```
  
 # Participantes do projeto (USJT - UNIMONTE):
