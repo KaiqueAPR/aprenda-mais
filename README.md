@@ -12,9 +12,9 @@ curl --location --request POST 'http://localhost:8080/usuario/novo' \
 --header 'telefone: 999999999' \
 --header 'ddd: 13' \
 --header 'email: kaiquepinho2010@hotmail.com' \
---header 'dtNascimento: 26/03/2003' \
+--header 'dtNascimento: 2003-03-26' \
 --header 'cep: 11325060' \
---header 'logradouro: Rua Emilio Vaz Afonso 82 Japui'
+--header 'logradouro: Rua Teste da Silva Junior 1'
 ```
 
 ## Response:
