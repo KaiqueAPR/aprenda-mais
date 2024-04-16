@@ -6,26 +6,30 @@ O projeto 'Aprenda+' é voltado para todos aqueles que contém algum tipo de nec
 # Exemplos:
 ## Request:
 ```
-curl --location --request POST 'http://localhost:8080/usuario/novo' \
---header 'nome: Kaique Araujo Pinholato Ribeiro' \
---header 'cpf: 11155522266' \
---header 'telefone: 999999999' \
---header 'ddd: 13' \
---header 'email: kaiquepinho2010@hotmail.com' \
---header 'dtNascimento: 2003-03-26' \
---header 'cep: 11325060' \
---header 'logradouro: Rua Teste da Silva Junior 1'
+curl --location 'http://localhost:8080/usuario/novo' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "nome": "Kaique Araujo Pinholato Ribeiro",
+    "cpf" : 11155522266,
+    "telefone" : 999999999,
+    "ddd" : 13,
+    "email" : "kaiquepinho2010@hotmail.com",
+    "dtNascimento" : "2003-03-26",
+    "cep" : 11325060,
+    "logradouro" : "Rua Teste da Silva Junior 1",
+    "senha" : "Teste"
+}'
 ```
 
 ## Response:
 ```
 {
     "nome": "Kaique Araujo Pinholato Ribeiro",
-    "cpf": "11122233344",
+    "cpf": "11155522266",
     "telefone": 999999999,
     "ddd": 13,
     "email": "kaiquepinho2010@hotmail.com",
-    "dtNascimento": "2003-03-26T00:00:00.000+00:00",
+    "dtNascimento": "2003-03-26",
     "cep": 11325060,
     "logradouro": "Rua Teste da Silva Junior 1"
 }
