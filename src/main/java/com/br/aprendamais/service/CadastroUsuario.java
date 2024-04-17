@@ -5,9 +5,11 @@ import com.br.aprendamais.model.UsuarioModel;
 import com.br.aprendamais.repository.UsuarioRepository;
 import com.br.aprendamais.request.UsuarioRequest;
 import com.br.aprendamais.response.UsuarioResponse;
+import jakarta.validation.Valid;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.Optional;
 
@@ -18,7 +20,7 @@ public class CadastroUsuario {
     private UsuarioRepository usuarioRepository;
 
     /*Método responsável por criar um novo Usuário*/
-    public UsuarioResponse novoUsuario (UsuarioRequest usuarioRequest){
+    public UsuarioResponse novoUsuario (@RequestBody @Valid UsuarioRequest usuarioRequest){
         UsuarioModel usuarioModel = new UsuarioModel();
         BeanUtils.copyProperties(usuarioRequest, usuarioModel);
         usuarioModel = usuarioRepository.save(usuarioModel);
@@ -35,7 +37,7 @@ public class CadastroUsuario {
     }
 
     /*Método responsável por converter um objeto para DTO*/
-    private UsuarioResponse converteParaDto(UsuarioModel usuarioModel) {
+    private UsuarioResponse converteParaDto(@RequestBody @Valid UsuarioModel usuarioModel) {
         UsuarioResponse usuarioResponse = new UsuarioResponse();
         usuarioResponse.setCep(usuarioModel.getCep());
         usuarioResponse.setCpf(usuarioModel.getCpf());
