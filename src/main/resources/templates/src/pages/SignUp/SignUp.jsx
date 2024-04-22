@@ -1,5 +1,7 @@
 import { React, useState } from 'react'
+import {Link} from 'react-router-dom'
 import './signup.css'
+
 import SideTitle from '../../components/SideTitle/SideTitle'
 import CustomInput from '../../components/CustomInput/CustomInput';
 
@@ -7,7 +9,7 @@ import { IoHelpCircle } from "react-icons/io5";
 
 
 const SignUp = () => {
-  const [dados, setDados] = useState();
+  const [dados, setDados] = useState('');
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -43,8 +45,11 @@ const SignUp = () => {
       <SideTitle />
       <section className='signup-container'>
         <div className='signup-box'>
+          <div className='box-header'>
+            <Link to={'/'}>Ir para login</Link>
+            <IoHelpCircle className='help-icon' />
+          </div>
           <h3>Cadastrar</h3>
-          <IoHelpCircle className='help-icon' />
           <form onSubmit={handleSubmit} id="signup-form">
 
             <div className="form-group">
@@ -87,10 +92,10 @@ const SignUp = () => {
             <div className="form-group">
               <label htmlFor="ddd">DDD</label>
               <CustomInput
-                limit={3}
+                limit={2}
                 InputName={"ddd"}
-                InputPattern={"[0-9]{3}"}
-                InputTitle={"Digite um DDD válido no formato XXX"}
+                InputPattern={"[0-9]{2}"}
+                InputTitle={"Digite um DDD válido no formato XX"}
                 InputPlaceholder={"Insira o DDD"}
                 HandleChangeProp={handleChange}
               />
