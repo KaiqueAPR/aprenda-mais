@@ -97,10 +97,10 @@ const SignUp = () => {
             </div>
 
             <div className="form-group">
-              <label htmlFor="tel">Telefone</label>
+              <label htmlFor="telefone">Telefone</label>
               <CustomInput
                 limit={9}
-                InputName={"tel"}
+                InputName={"telefone"}
                 InputPattern={"\[0-9]{9}"}
                 InputTitle={"Digite um número de telefone válido no formato XXXXXXXXX"}
                 InputPlaceholder={"Insira um número de telefone"}
