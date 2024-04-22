@@ -94,7 +94,7 @@ const SignUp = () => {
               <CustomInput
                 limit={2}
                 InputName={"ddd"}
-                InputPattern={"[0-9]{3}"}
+                InputPattern={"[0-9]{2}"}
                 InputTitle={"Digite um DDD válido no formato XX"}
                 InputPlaceholder={"Insira o DDD"}
                 HandleChangeProp={handleChange}
