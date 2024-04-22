@@ -1,16 +1,13 @@
 import React, { useState } from 'react'
 
-const CustomInput = ({ limit, InputName, InputPattern, InputTitle, InputPlaceholder}) => {
-    const [InputValue, setInputValue] = useState('');
+const CustomInput = ({ limit, InputValue, HandleChangeProp, InputName, InputPattern, InputTitle, InputPlaceholder}) => {
+    // const [InputValue, setInputValue] = useState('');
 
 
-    function handleChange(event) {
-        const newValue = event.target.value.replace(/\D/g, '');
-
-        if (newValue.length <= limit) {
-            setInputValue(newValue);
-        }
-    }
+    // function handleChange(event) {
+    //     const newValue = event.target.value.replace(/\D/g, '');
+    //     setInputValue(newValue);
+    // }
 
 
     return (
@@ -18,11 +15,12 @@ const CustomInput = ({ limit, InputName, InputPattern, InputTitle, InputPlacehol
             type="text"
             className="signup-form-input"
             value={InputValue}
-            onChange={handleChange}
+            onChange={HandleChangeProp}
             name={InputName}
-            pattern={InputPattern} //\d{3}\.\d{3}\.\d{3}-\d{2}
-            title={InputTitle} //Digite um CPF válido no formato XXX.XXX.XXX-XX
-            placeholder={InputPlaceholder}//'___.___.___-__'
+            pattern={InputPattern}
+            title={InputTitle}
+            placeholder={InputPlaceholder}
+            maxLength={limit}
             required
         />
     )
