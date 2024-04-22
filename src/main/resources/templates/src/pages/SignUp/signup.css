@@ -14,13 +14,25 @@
 .signup-box {
     display: flex;
     flex-direction: column;
-    gap: 40px;
+    gap: 30px;
     text-align: center;
     width: 80%;
-    height: 70%;
+    height: 80%;
     padding: 25px;
     background-color: #D9D9D9;
     border-radius: 15px;
+}
+
+.box-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0 15px;
+}
+
+.box-header a {
+    text-decoration: none;
+    font-weight: 600;
 }
 
 .signup-box h3 {
@@ -28,8 +40,6 @@
 }
 
 .help-icon {
-    position: absolute;
-    z-index: 9999;
     width: 35px;
     height: 35px;
     right: 8%;
@@ -61,7 +71,7 @@
 .btn-form {
     background-color: #6906B7;
     color: white;
-    margin-top: 18px;
+    margin-top: 23px;
     border-radius: 8px;
     border: none;
     width: 50%;
