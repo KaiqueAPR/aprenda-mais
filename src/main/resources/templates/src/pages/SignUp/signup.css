@@ -14,8 +14,8 @@
 .signup-box {
     display: flex;
     flex-direction: column;
-    gap: 30px;
     text-align: center;
+    gap: 30px;
     width: 80%;
     height: 80%;
     padding: 25px;
@@ -42,7 +42,6 @@
 .help-icon {
     width: 35px;
     height: 35px;
-    right: 8%;
     cursor: pointer;
     color: #6906B7;
 }
@@ -50,6 +49,7 @@
 #signup-form {
     display: flex;
     flex-wrap: wrap;
+    height: 100%;
 }
 
 .signup-form-input {
@@ -78,9 +78,6 @@
     padding: 5px;
     text-align: center;
     font-weight: 600;
-}
-
-.btn-form:hover {
     cursor: pointer;
 }
 
@@ -107,7 +104,7 @@ label {
         width: 90%;
         height: 60%;
         padding: 40px 0;
-        margin: 100px 0;
+        margin: 20% 0;
     }
 
     #signup-form {

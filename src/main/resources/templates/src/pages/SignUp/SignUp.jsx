@@ -46,7 +46,7 @@ const SignUp = () => {
       <section className='signup-container'>
         <div className='signup-box'>
           <div className='box-header'>
-            <Link to={'/'}>Ir para login</Link>
+            <Link to={'/login'}>Ir para login</Link>
             <IoHelpCircle className='help-icon' />
           </div>
           <h3>Cadastrar</h3>
