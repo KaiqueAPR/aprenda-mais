@@ -21,7 +21,7 @@ const Login = () => {
   const handleSubmitLogin = (event) => {
     event.preventDefault();
 
-    fetch('http://localhost:8080/{endpoint}', {
+    fetch('http://localhost:8080/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

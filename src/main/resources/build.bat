@@ -1,7 +1,7 @@
 @echo off
 
 rem *** TROCAR PELO DIRETÓRIO EM QUE SEU PROJETO ESTÁ ***
-set projeto=C:\Projetos\Fontes\aprenda-mais
+set projeto=C:\fontes\aprenda-mais
 
 rem *** NÃO TROCAR OS DIRETÓRIOS ABAIXO ***
 set pasta_origem=%projeto%\src\main\resources\templates\dist
