@@ -3,7 +3,6 @@ package com.br.aprendamais.service;
 import com.br.aprendamais.model.UsuarioModel;
 import com.br.aprendamais.repository.UsuarioRepository;
 import com.br.aprendamais.request.LoginRequest;
-import com.br.aprendamais.response.LoginResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

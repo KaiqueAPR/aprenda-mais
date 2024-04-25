@@ -1,8 +1,6 @@
 package com.br.aprendamais.controller;
 
 import com.br.aprendamais.request.LoginRequest;
-import com.br.aprendamais.request.UsuarioRequest;
-import com.br.aprendamais.response.UsuarioResponse;
 import com.br.aprendamais.service.Login;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
