@@ -1,4 +1,4 @@
-import React from 'react'
+import {React, useState} from 'react'
 import SideTitle from '../../components/SideTitle/SideTitle'
 
 import { Link } from 'react-router-dom'
@@ -8,6 +8,37 @@ import '../Login/login.css'
 import { IoHelpCircle } from "react-icons/io5";
 
 const Login = () => {
+  const [dadosLogin, setDadosLogin] = useState('');
+
+  const handleChangeLogin = (event) => {
+    const { name, value } = event.target;
+    setDadosLogin({ ...dadosLogin, [name]: value });
+  };
+
+  const handleSubmitLogin = (event) => {
+    event.preventDefault();
+
+    fetch('http://localhost:8080/{endpoint}', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(dadosLogin)
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Falha ao receber usuário.');
+        }
+        return response.json();
+      })
+      .then((data) => {
+        console.log('Login efetuado com sucesso:', data);
+        // Espaço para fazermos algo com a resposta de sucesso
+      })
+      .catch((error) => {
+        console.error('Erro ao efetuar login:', error);
+      });
+  };
   return (
     <div className='login-page'>
       <SideTitle />
@@ -17,16 +48,17 @@ const Login = () => {
             <IoHelpCircle className='help-icon' />
           </div>
           <h3>Login</h3>
-          <form action="" id='login-form'>
+          <form onSubmit={handleSubmitLogin} id='login-form'>
             <div className="login-form-group">
               <div>
-                <label htmlFor="usuario">Usuário</label>
+                <label htmlFor="login">Usuário</label>
               </div>
               <input
                 type="text"
-                name="usuario"
+                name="Login"
                 className="login-form-input"
                 placeholder='Insira o email ou telefone'
+                onChange={handleChangeLogin}
                 required
               />
             </div>
@@ -36,9 +68,10 @@ const Login = () => {
               </div>
               <input
                 type="password"
-                name="senha"
+                name="Senha"
                 className="login-form-input"
                 placeholder='Insira sua senha'
+                onChange={handleChangeLogin}
                 required
               />
             </div>
