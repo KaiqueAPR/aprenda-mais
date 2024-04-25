@@ -1,11 +1,14 @@
-import {React, useState} from 'react'
-import SideTitle from '../../components/SideTitle/SideTitle'
-
+import { React, useState } from 'react'
 import { Link } from 'react-router-dom'
+import swal from 'sweetalert'
+import Joyride from 'react-joyride'
 
+
+import SideTitle from '../../components/SideTitle/SideTitle'
 import '../Login/login.css'
 
 import { IoHelpCircle } from "react-icons/io5";
+
 
 const Login = () => {
   const [dadosLogin, setDadosLogin] = useState('');
@@ -27,18 +30,39 @@ const Login = () => {
     })
       .then((response) => {
         if (!response.ok) {
+          swal({
+            title: "Falha ao efetuar login!",
+            text: "Verifique se suas credenciais estão corretas.",
+            icon: "error",
+            timer: 2000,
+            button: false,
+          });
           throw new Error('Falha ao receber usuário.');
         }
         return response.json();
       })
       .then((data) => {
         console.log('Login efetuado com sucesso:', data);
-        // Espaço para fazermos algo com a resposta de sucesso
+        swal({
+          title: "Login efetuado com sucesso!",
+          text: "Você será direcionado para a plataforma de cursos.",
+          icon: "success",
+          timer: 2000,
+          button: false,
+        });
       })
       .catch((error) => {
+        swal({
+          title: "Falha ao efetuar login!",
+          text: "Verifique se suas credenciais estão corretas.",
+          icon: "error",
+          timer: 2000,
+          button: false,
+        });
         console.error('Erro ao efetuar login:', error);
       });
   };
+
   return (
     <div className='login-page'>
       <SideTitle />
