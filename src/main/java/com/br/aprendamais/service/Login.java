@@ -15,11 +15,11 @@ public class Login {
     public boolean loginUsuario (LoginRequest loginRequest) {
         boolean retorno = false;
 
-        UsuarioModel usuarioModel = usuarioRepository.findByEmailAndSenha(loginRequest.getLogin, loginRequest.getSenha);
+        UsuarioModel usuarioModel = usuarioRepository.findByEmailAndSenha(loginRequest.getLogin(), loginRequest.getSenha());
 
-        if(!login.contains("@")){
-            Integer loginTelefone = Integer.parseInt(login);
-            usuarioModel = usuarioRepository.findByTelefoneAndSenha(loginTelefone, loginRequest.getSenha);
+        if(!loginRequest.getLogin().contains("@")){
+            Integer loginTelefone = Integer.parseInt(loginRequest.getLogin());
+            usuarioModel = usuarioRepository.findByTelefoneAndSenha(loginTelefone, loginRequest.getSenha());
             retorno = true;
         }
 
