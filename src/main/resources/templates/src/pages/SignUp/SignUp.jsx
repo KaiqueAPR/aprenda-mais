@@ -1,15 +1,16 @@
-import { React, useState } from 'react'
-import {Link} from 'react-router-dom'
-import './signup.css'
+import './signup.css';
 
-import SideTitle from '../../components/SideTitle/SideTitle'
+import { React, useState } from 'react';
+
 import CustomInput from '../../components/CustomInput/CustomInput';
-
 import { IoHelpCircle } from "react-icons/io5";
-
+import { Link } from 'react-router-dom';
+import SideTitle from '../../components/SideTitle/SideTitle';
 
 const SignUp = () => {
   const [dados, setDados] = useState('');
+  const [showForm1, setShowForm1] = useState(true);
+  const [showForm2, setShowForm2] = useState(false);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
