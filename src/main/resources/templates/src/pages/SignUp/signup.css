@@ -85,11 +85,16 @@ label {
     display: block;
 }
 
+.btn-back {
+    background-color: #a8a1a1;
+    border-color: #a8a1a1;
+    color: black;
+}
+
 @media (max-width: 1180px) {
     .signup-page {
         display: block;
     }
-
     .signup-container {
         display: flex;
         align-items: center;
@@ -97,7 +102,6 @@ label {
         width: 100%;
         height: 100%;
     }
-
     .signup-box {
         display: flex;
         flex-direction: column;
@@ -106,14 +110,12 @@ label {
         padding: 40px 0;
         margin: 20% 0;
     }
-
     #signup-form {
         display: flex;
         flex-direction: column;
         flex-wrap: nowrap;
         align-items: center;
     }
-
     .signup-form-input {
         border: none;
         width: 100%;
@@ -121,7 +123,6 @@ label {
         text-align: left;
         height: 50px;
     }
-
     .form-group {
         display: flex;
         flex-direction: column;
@@ -132,11 +133,9 @@ label {
         font-weight: 500;
         width: 90%;
     }
-
     .btn-form {
         width: 90%;
     }
-
     .help-icon {
         width: 50px;
         height: 50px;
