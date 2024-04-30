@@ -5,6 +5,7 @@ import { IoHelpCircle } from "react-icons/io5";
 import { Link } from 'react-router-dom';
 import SideTitle from '../../components/SideTitle/SideTitle';
 import { useForm } from "react-hook-form";
+import swal from 'sweetalert'
 import { useState } from 'react';
 
 const SignUp = () => {
@@ -51,7 +52,7 @@ const SignUp = () => {
     dados.cpf = dados.cpf.replace(/\D/g, '');
     dados.telefone = dados.telefone.replace(/\D/g, '');
     dados.ddd = dados.ddd.replace(/\D/g, '');
-    
+
 
     try {
       const response = await fetch('http://localhost:8080/usuario/novo', {
@@ -69,10 +70,24 @@ const SignUp = () => {
 
       const data = await response.json();
       console.log('Dados enviados com sucesso:', data);
+      swal({
+        title: "Cadastro realizado com sucesso!",
+        text: "Você será redirecionado para a área de login.",
+        icon: "success",
+        timer: 2000,
+        button: false,
+      });
       setDisableBtnSubmit(false);
 
     } catch (error) {
       console.error('Erro ao enviar dados:', error);
+      swal({
+        title: "Falha ao realizar cadastro!",
+        text: "Por favor tente novamente.",
+        icon: "error",
+        timer: 2000,
+        button: false,
+      });
       setDisableBtnSubmit(false);
     }
   };
@@ -96,18 +111,18 @@ const SignUp = () => {
       const jsonData = await response.json();
       const endereco = `Rua: ${jsonData.logradouro}, Bairro: ${jsonData.bairro}, Cidade: ${jsonData.localidade}, Estado: ${jsonData.uf}`;
       console.log('Endereço:', endereco);
-      
+
       // esse setdados e diferente
       setDados(prevState => ({
         ...prevState,
         cep: prevState.cep,
         logradouro: endereco
-    }));
+      }));
       /*
       Em React, prevState é um parâmetro opcional em métodos de atualização de estado,
        como setState, que permite acessar o estado anterior do componente antes da atualização.
-      */ 
-     
+      */
+
     } catch (err) {
       console.error(err);
     }
@@ -123,7 +138,9 @@ const SignUp = () => {
         <div className='signup-box'>
 
           <div className='box-header'>
-            <Link to={'/login'}>Ir para login</Link>
+            <div className='header-link'>
+              <Link to={'/login'}>Ir para login</Link>
+            </div>
             <IoHelpCircle className='help-icon' />
           </div>
           <h3>Cadastrar</h3>
@@ -197,7 +214,7 @@ const SignUp = () => {
                   />
                 </div>
 
-                <div className="form-group">
+                <div className="form-group-btn">
                   <button
                     type="button"
                     disabled={disableBtnVoltar}
@@ -274,7 +291,7 @@ const SignUp = () => {
                   />
                 </div>
 
-                <div className="form-group">
+                <div className="form-group-btn">
                   <button
                     type="button"
                     onClick={() => {
@@ -287,9 +304,7 @@ const SignUp = () => {
                   >
                     Voltar
                   </button>
-                </div>
 
-                <div className="form-group">
                   <button
                     type="submit"
                     disabled={disableBtnSubmit}
