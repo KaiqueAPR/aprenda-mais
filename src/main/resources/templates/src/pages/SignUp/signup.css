@@ -4,6 +4,10 @@
     height: 100%;
 }
 
+label {
+    display: block;
+}
+
 .signup-container {
     display: flex;
     align-items: center;
@@ -69,8 +73,13 @@
 }
 
 .btn-form {
-    background-color: #6906B7;
-    color: white;
+    /* Variaveis  */
+    --btn-color: #6906B7;
+    --btn-font-color: #fff;
+    --btn-disabled-opacity: 0.65;
+    /*  */
+    background-color: var(--btn-color);
+    color: var(--btn-font-color);
     margin-top: 23px;
     border-radius: 8px;
     border: none;
@@ -81,14 +90,61 @@
     cursor: pointer;
 }
 
-label {
-    display: block;
+.btn-form:disabled {
+    opacity: var(--btn-disabled-opacity);
+    pointer-events: none;
+    /* cursor: not-allowed; */
+}
+
+.btn-form:hover {
+    background-color: var(--btn-color);
+    color: var(--btn-font-color);
+    filter: brightness(80%);
+    margin-top: 23px;
+    border-radius: 8px;
+    border: none;
+    width: 50%;
+    padding: 5px;
+    text-align: center;
+    font-weight: 600;
+    cursor: pointer;
 }
 
 .btn-back {
-    background-color: #a8a1a1;
-    border-color: #a8a1a1;
-    color: black;
+    /* Variaveis  */
+    --btn-color: #a8a1a1;
+    --font-color: #000;
+    --btn-border-color: #a8a1a1;
+    /*  */
+    background-color: var(--btn-color);
+    border-color: var(--btn-border-color);
+    color: var(--font-color);
+}
+
+.btn-back:disabled {
+    opacity: var(--btn-disabled-opacity);
+    pointer-events: none;
+    /* cursor: not-allowed; */
+}
+
+.spinner {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--btn-font-color);
+    border-top-color: transparent;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+.btn-form:not(:disabled) .spinner {
+    display: none;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
 }
 
 @media (max-width: 1180px) {

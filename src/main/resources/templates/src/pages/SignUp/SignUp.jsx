@@ -1,18 +1,25 @@
 import './signup.css';
 
-import { React, useState } from 'react';
-
 import CustomInput from '../../components/CustomInput/CustomInput';
 import { IoHelpCircle } from "react-icons/io5";
 import { Link } from 'react-router-dom';
 import SideTitle from '../../components/SideTitle/SideTitle';
+import { useForm } from "react-hook-form";
+import { useState } from 'react';
 
 const SignUp = () => {
   const [dados, setDados] = useState('');
   const [showForm1, setShowForm1] = useState(true);
   const [showForm2, setShowForm2] = useState(false);
-  const [disableBtnVoltar, setDisableBtnVoltar] = useState(false);
+  const [disableBtnVoltar, setDisableBtnVoltar] = useState(true);
+  const [disableBtnSubmit, setDisableBtnSubmit] = useState(false);
 
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm();
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -23,22 +30,23 @@ const SignUp = () => {
       buscaEndereco(cepNumber);
     }
 
-    // if (name === 'nome') {
-    //   if (value !== undefined && value !== '') {
-    //     setDisableBtnVoltar(false);
-    //     console.log(disableBtnVoltar);
-    //   } else {
-    //     setDisableBtnVoltar(true);
-    //     console.log(disableBtnVoltar);
-    //   }
-    // }
+    if (name === 'nome') {
+      if (value !== undefined && value !== '') {
+        setDisableBtnVoltar(false);
+        console.log(disableBtnVoltar);
+      } else {
+        setDisableBtnVoltar(true);
+        console.log(disableBtnVoltar);
+      }
+    }
 
     setDados({ ...dados, [name]: value });
   };
 
   // Função que envia os dados do formulário para o backend
-  const handleSubmit = async (event) => {
-    event.preventDefault();
+  const onSubmit = async (event) => {
+    // event.preventDefault();
+    setDisableBtnSubmit(true);
     dados.cep = dados.cep.replace(/\D/g, '');
     dados.cpf = dados.cpf.replace(/\D/g, '');
     dados.telefone = dados.telefone.replace(/\D/g, '');
@@ -55,17 +63,19 @@ const SignUp = () => {
       });
 
       if (!response.ok) {
+        setDisableBtnSubmit(false);
         throw new Error('Falha ao enviar dados');
       }
 
       const data = await response.json();
       console.log('Dados enviados com sucesso:', data);
+      setDisableBtnSubmit(false);
 
     } catch (error) {
       console.error('Erro ao enviar dados:', error);
+      setDisableBtnSubmit(false);
     }
   };
-
 
 
   const buscaEndereco = async (cep) => {
@@ -117,7 +127,7 @@ const SignUp = () => {
             <IoHelpCircle className='help-icon' />
           </div>
           <h3>Cadastrar</h3>
-          <form onSubmit={handleSubmit} id="signup-form">
+          <form onSubmit={handleSubmit(onSubmit)} id="signup-form">
 
             {showForm1 ? (
               <>
@@ -280,11 +290,11 @@ const SignUp = () => {
                 </div>
 
                 <div className="form-group">
-                  <input
+                  <button
                     type="submit"
-                    value="Registrar-se"
+                    disabled={disableBtnSubmit}
                     className='btn-form'
-                  />
+                  >{!disableBtnSubmit ? 'Cadastrar' : <span className="spinner"></span>}</button>
                 </div>
               </>
             ) : null}
