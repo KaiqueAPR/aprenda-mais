@@ -1,6 +1,7 @@
-import React, { useState } from 'react'
+import { InputMask } from '../../functions/inputMask';
+import React from 'react';
 
-const CustomInput = ({ limit, InputValue, HandleChangeProp, InputName, InputPattern, InputTitle, InputPlaceholder}) => {
+const CustomInput = ({ limit, InputValue, HandleChangeProp, InputName, InputPattern, InputTitle, InputPlaceholder }) => {
     // const [InputValue, setInputValue] = useState('');
 
 
@@ -9,12 +10,34 @@ const CustomInput = ({ limit, InputValue, HandleChangeProp, InputName, InputPatt
     //     setInputValue(newValue);
     // }
 
+    const objDados = {
+        regex: InputPattern,
+        value: InputValue,
+        inputName: InputName
+    }
+
 
     return (
+
+        // <input
+        //     type="text"
+        //     className="signup-form-input"
+        //     value={InputValue}
+        //     onChange={HandleChangeProp}
+        //     name={InputName}
+        //     pattern={InputPattern}
+        //     title={InputTitle}
+        //     placeholder={InputPlaceholder}
+        //     maxLength={limit}
+        //     required
+        // />
+
+
+
         <input
             type="text"
             className="signup-form-input"
-            value={InputValue}
+            value={InputMask(objDados)}
             onChange={HandleChangeProp}
             name={InputName}
             pattern={InputPattern}
@@ -23,6 +46,8 @@ const CustomInput = ({ limit, InputValue, HandleChangeProp, InputName, InputPatt
             maxLength={limit}
             required
         />
+
+
     )
 }
 
