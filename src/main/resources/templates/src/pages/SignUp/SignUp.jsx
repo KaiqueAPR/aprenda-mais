@@ -1,30 +1,57 @@
 import './signup.css';
 
-import { React, useState } from 'react';
-
 import CustomInput from '../../components/CustomInput/CustomInput';
 import { IoHelpCircle } from "react-icons/io5";
 import { Link } from 'react-router-dom';
 import SideTitle from '../../components/SideTitle/SideTitle';
+import { useForm } from "react-hook-form";
+import { useState } from 'react';
 
 const SignUp = () => {
   const [dados, setDados] = useState('');
   const [showForm1, setShowForm1] = useState(true);
   const [showForm2, setShowForm2] = useState(false);
+  const [disableBtnVoltar, setDisableBtnVoltar] = useState(true);
+  const [disableBtnSubmit, setDisableBtnSubmit] = useState(false);
+
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm();
 
   const handleChange = (event) => {
     const { name, value } = event.target;
 
-    if (name === 'cep' && value.length === 8) {
-      buscaEndereco(value);
+    // Caso o que esteja seja o de cep e que contenha os 8 numeros , ele entra na função "buscaEndereco()"
+    if (name === 'cep' && value.length === 9) {
+      let cepNumber = value.replace(/\D/g, '');
+      buscaEndereco(cepNumber);
+    }
+
+    if (name === 'nome') {
+      if (value !== undefined && value !== '') {
+        setDisableBtnVoltar(false);
+        console.log(disableBtnVoltar);
+      } else {
+        setDisableBtnVoltar(true);
+        console.log(disableBtnVoltar);
+      }
     }
 
     setDados({ ...dados, [name]: value });
   };
 
   // Função que envia os dados do formulário para o backend
-  const handleSubmit = async (event) => {
-    event.preventDefault();
+  const onSubmit = async (event) => {
+    // event.preventDefault();
+    setDisableBtnSubmit(true);
+    dados.cep = dados.cep.replace(/\D/g, '');
+    dados.cpf = dados.cpf.replace(/\D/g, '');
+    dados.telefone = dados.telefone.replace(/\D/g, '');
+    dados.ddd = dados.ddd.replace(/\D/g, '');
+    
 
     try {
       const response = await fetch('http://localhost:8080/usuario/novo', {
@@ -36,27 +63,30 @@ const SignUp = () => {
       });
 
       if (!response.ok) {
+        setDisableBtnSubmit(false);
         throw new Error('Falha ao enviar dados');
       }
 
       const data = await response.json();
       console.log('Dados enviados com sucesso:', data);
+      setDisableBtnSubmit(false);
 
     } catch (error) {
       console.error('Erro ao enviar dados:', error);
+      setDisableBtnSubmit(false);
     }
   };
 
 
-
-
   const buscaEndereco = async (cep) => {
+
     try {
-      const response = await fetch(`https://viacep.com.br/ws/${cep}/json/`,{
+      const response = await fetch(`https://viacep.com.br/ws/${cep}/json/`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json'
-      }});
+        }
+      });
 
       //  Caso haja algum erro na requisição
       if (!response.ok) {
@@ -65,8 +95,19 @@ const SignUp = () => {
 
       const jsonData = await response.json();
       const endereco = `Rua: ${jsonData.logradouro}, Bairro: ${jsonData.bairro}, Cidade: ${jsonData.localidade}, Estado: ${jsonData.uf}`;
-      setDados({ ...dados, logradouro: endereco });
-
+      console.log('Endereço:', endereco);
+      
+      // esse setdados e diferente
+      setDados(prevState => ({
+        ...prevState,
+        cep: prevState.cep,
+        logradouro: endereco
+    }));
+      /*
+      Em React, prevState é um parâmetro opcional em métodos de atualização de estado,
+       como setState, que permite acessar o estado anterior do componente antes da atualização.
+      */ 
+     
     } catch (err) {
       console.error(err);
     }
@@ -86,7 +127,7 @@ const SignUp = () => {
             <IoHelpCircle className='help-icon' />
           </div>
           <h3>Cadastrar</h3>
-          <form onSubmit={handleSubmit} id="signup-form">
+          <form onSubmit={handleSubmit(onSubmit)} id="signup-form">
 
             {showForm1 ? (
               <>
@@ -98,6 +139,7 @@ const SignUp = () => {
                     className="signup-form-input"
                     placeholder='Insira o seu nome'
                     required
+                    value={dados.nome || ''}
                     onChange={handleChange}
                   />
                 </div>
@@ -105,12 +147,13 @@ const SignUp = () => {
                 <div className="form-group">
                   <label htmlFor="cpf">CPF</label>
                   <CustomInput
-                    limit={11}
+                    limit={14}
                     InputName={"cpf"}
-                    InputPattern={"[0-9]{11}"}
+                    InputPattern={/[^0-9]/g}
                     InputTitle={"Digite um CPF válido no formato XXXXXXXXXXX"}
                     InputPlaceholder={"Insira o seu CPF"}
                     HandleChangeProp={handleChange}
+                    InputValue={dados.cpf || ''}
                   />
                 </div>
 
@@ -119,22 +162,24 @@ const SignUp = () => {
                   <CustomInput
                     limit={2}
                     InputName={"ddd"}
-                    InputPattern={"[0-9]{2}"}
+                    InputPattern={/[^0-9]/g}
                     InputTitle={"Digite um DDD válido no formato XX"}
                     InputPlaceholder={"Insira o DDD"}
                     HandleChangeProp={handleChange}
+                    InputValue={dados.ddd || ''}
                   />
                 </div>
 
                 <div className="form-group">
                   <label htmlFor="telefone">Telefone</label>
                   <CustomInput
-                    limit={9}
+                    limit={10}
                     InputName={"telefone"}
-                    InputPattern={"\[0-9]{9}"}
-                    InputTitle={"Digite um número de telefone válido no formato XXXXXXXXX"}
+                    InputPattern={/[^0-9]/g}
+                    InputTitle={"Digite um número de telefone válido no formato XXXXX-XXXX"}
                     InputPlaceholder={"Insira um número de telefone"}
                     HandleChangeProp={handleChange}
+                    InputValue={dados.telefone || ''}
                   />
                 </div>
 
@@ -146,13 +191,16 @@ const SignUp = () => {
                     id="dtNascimento"
                     className="signup-form-input"
                     required
+                    maxLength={10}
                     onChange={handleChange}
+                    value={dados.dtNascimento || ''}
                   />
                 </div>
 
                 <div className="form-group">
                   <button
                     type="button"
+                    disabled={disableBtnVoltar}
                     onClick={() => {
                       setShowForm1(!showForm1);
                       setShowForm2(!showForm2);
@@ -179,6 +227,7 @@ const SignUp = () => {
                     id="email"
                     className="signup-form-input"
                     placeholder='Insira um email'
+                    value={dados.email || ''}
                     required
                     onChange={handleChange}
                   />
@@ -192,6 +241,7 @@ const SignUp = () => {
                     id="senha"
                     className="signup-form-input"
                     placeholder='Insira sua senha'
+                    value={dados.senha || ''}
                     required
                     onChange={handleChange}
                   />
@@ -200,13 +250,13 @@ const SignUp = () => {
                 <div className="form-group">
                   <label htmlFor="cep">CEP</label>
                   <CustomInput
-                    limit={8}
+                    limit={9}
                     InputName={"cep"}
-                    InputPattern={"\[0-9]{8}"}
-                    InputTitle={"Digite um CEP válido no formato XXXXXXXX"}
+                    // InputPattern={/[^0-9]/g}
+                    InputTitle={"Digite um CEP válido no formato XXXXX-XXX"}
                     InputPlaceholder={"Insira um CEP"}
                     HandleChangeProp={handleChange}
-                  // value={dados.cep}
+                    InputValue={dados.cep || ''}
                   />
                 </div>
 
@@ -240,11 +290,11 @@ const SignUp = () => {
                 </div>
 
                 <div className="form-group">
-                  <input
+                  <button
                     type="submit"
-                    value="Registrar-se"
+                    disabled={disableBtnSubmit}
                     className='btn-form'
-                  />
+                  >{!disableBtnSubmit ? 'Cadastrar' : <span className="spinner"></span>}</button>
                 </div>
               </>
             ) : null}
