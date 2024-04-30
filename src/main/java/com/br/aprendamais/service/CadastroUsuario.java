@@ -11,24 +11,34 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import javax.mail.MessagingException;
 import java.util.Optional;
 
 @Service
-public class CadastroUsuario {
+public class CadastroUsuario extends EnviaEmail {
 
     @Autowired
     private UsuarioRepository usuarioRepository;
 
     /*Método responsável por criar um novo Usuário*/
-    public UsuarioResponse novoUsuario (@RequestBody @Valid UsuarioRequest usuarioRequest){
+    public UsuarioResponse novoUsuario(@RequestBody @Valid UsuarioRequest usuarioRequest) {
         UsuarioModel usuarioModel = new UsuarioModel();
         BeanUtils.copyProperties(usuarioRequest, usuarioModel);
         usuarioModel = usuarioRepository.save(usuarioModel);
+
+        String tituloEmail = "Aprenda+ - Código de Autenticação";
+        String corpoEmail = "Adicionar aqui o corpo da autenticação..." +
+                "Atenciosamente," +
+                "Equipe Aprenda+";
+
+        //Envio de autenticação de e-mail
+        enviarEmail(usuarioModel.getEmail(), tituloEmail, corpoEmail);
+
         return converteParaDto(usuarioModel);
     }
 
     /*Método responsável por localizar um Usuário através do seu ID*/
-    public UsuarioResponse pesquisaUsuario (Integer id) {
+    public UsuarioResponse pesquisaUsuario(Integer id) {
         Optional<UsuarioModel> optional = usuarioRepository.findById(id);
         if (optional.isEmpty()) {
             throw new UsuarioNotFound("O Usuário que você tentou localizar não existe.");
