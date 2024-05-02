@@ -12,6 +12,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.mail.MessagingException;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.Optional;
 
 @Service
@@ -26,10 +29,13 @@ public class CadastroUsuario extends EnviaEmail {
         BeanUtils.copyProperties(usuarioRequest, usuarioModel);
         usuarioModel = usuarioRepository.save(usuarioModel);
 
+        // Caminho do arquivo HTML
+        String filePath = "C:\\Projetos\\Fontes\\aprenda-mais\\src\\main\\java\\com\\br\\aprendamais\\templates\\EmailAutenticacao.html";
+
+        // Ler o conteúdo do arquivo HTML
+        String corpoEmail = readHTMLFile(filePath);
+
         String tituloEmail = "Aprenda+ - Código de Autenticação";
-        String corpoEmail = "Adicionar aqui o corpo da autenticação..." +
-                "Atenciosamente," +
-                "Equipe Aprenda+";
 
         //Envio de autenticação de e-mail
         enviarEmail(usuarioModel.getEmail(), tituloEmail, corpoEmail);
@@ -59,6 +65,18 @@ public class CadastroUsuario extends EnviaEmail {
         usuarioResponse.setDtNascimento(usuarioModel.getDtNascimento());
 
         return usuarioResponse;
+    }
+    private static String readHTMLFile(String filePath) {
+        StringBuilder contentBuilder = new StringBuilder();
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                contentBuilder.append(line).append("\n"); // Adiciona uma nova linha
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return contentBuilder.toString();
     }
 
 }

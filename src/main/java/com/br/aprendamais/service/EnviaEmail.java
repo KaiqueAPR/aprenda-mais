@@ -47,27 +47,22 @@ public class EnviaEmail {
         session.setDebug(true);
 
         try {
-
             Message message = new MimeMessage(session);
             message.setFrom(new InternetAddress("aprenda_mais_@hotmail.com"));
-            //Remetente
-
-            Address[] toUser = InternetAddress //Destinatário(s)
-                    .parse(emailDestinatario);
-
+            message.setContent(corpoEmail, "text/html"); // Configura o conteúdo como HTML
+            Address[] toUser = InternetAddress.parse(emailDestinatario);
             message.setRecipients(Message.RecipientType.TO, toUser);
-            message.setSubject(tituloEmail);//Assunto
-            message.setText(corpoEmail);
+            message.setSubject(tituloEmail);
 
-            /*Método para enviar a mensagem criada*/
+            /* Método para enviar a mensagem criada */
             Transport.send(message);
 
             System.out.println("E-mail enviado com sucesso!");
-
         } catch (MessagingException e) {
             System.out.println("Erro ao enviar e-mail: " + e.getMessage());
             throw new RuntimeException(e);
         }
+
     }
 
 }
