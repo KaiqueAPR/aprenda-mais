@@ -24,4 +24,9 @@ public class CadastroUsuarioController {
     public UsuarioResponse novoUsuario(@RequestBody @Valid UsuarioRequest usuarioRequest) {
         return cadastroUsuarioService.novoUsuario(usuarioRequest);
     }
+
+    @PostMapping("/autenticar/{id}")
+    public UsuarioResponse autenticarUsuario (@RequestHeader @Valid Integer id){
+        return cadastroUsuarioService.autenticarUsuario(id);
+    }
 }

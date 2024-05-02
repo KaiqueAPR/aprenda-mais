@@ -48,4 +48,7 @@ public class UsuarioModel {
     @Column(name = "senha")
     private String senha;
 
+    @Column(name = "ckAutenticacao")
+    private boolean ckAutenticacao;
+
 }

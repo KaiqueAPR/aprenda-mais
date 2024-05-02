@@ -26,6 +26,7 @@ public class CadastroUsuario extends EnviaEmail {
     /*Método responsável por criar um novo Usuário*/
     public UsuarioResponse novoUsuario(@RequestBody @Valid UsuarioRequest usuarioRequest) {
         UsuarioModel usuarioModel = new UsuarioModel();
+        usuarioModel.setCkAutenticacao(false);
         BeanUtils.copyProperties(usuarioRequest, usuarioModel);
         usuarioModel = usuarioRepository.save(usuarioModel);
 
@@ -43,13 +44,22 @@ public class CadastroUsuario extends EnviaEmail {
         return converteParaDto(usuarioModel);
     }
 
+    public UsuarioResponse autenticarUsuario(Integer id){
+        UsuarioModel usuario = pesquisaUsuario(id);
+        if (!usuario.isCkAutenticacao()) {
+            usuario.setCkAutenticacao(true);
+            usuarioRepository.save(usuario);
+        }
+        return converteParaDto(usuario);
+    }
+
     /*Método responsável por localizar um Usuário através do seu ID*/
-    public UsuarioResponse pesquisaUsuario(Integer id) {
+    public UsuarioModel pesquisaUsuario(Integer id) {
         Optional<UsuarioModel> optional = usuarioRepository.findById(id);
         if (optional.isEmpty()) {
             throw new UsuarioNotFound("O Usuário que você tentou localizar não existe.");
         }
-        return converteParaDto(optional.get());
+        return optional.get();
     }
 
     /*Método responsável por converter um objeto para DTO*/
