@@ -2,7 +2,7 @@ import './signup.css';
 
 import CustomInput from '../../components/CustomInput/CustomInput';
 import { IoHelpCircle } from "react-icons/io5";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import SideTitle from '../../components/SideTitle/SideTitle';
 import { useForm } from "react-hook-form";
 import swal from 'sweetalert'
@@ -52,6 +52,7 @@ const SignUp = () => {
     dados.cpf = dados.cpf.replace(/\D/g, '');
     dados.telefone = dados.telefone.replace(/\D/g, '');
     dados.ddd = dados.ddd.replace(/\D/g, '');
+    let navigate = useNavigate()
 
 
     try {
@@ -77,6 +78,7 @@ const SignUp = () => {
         timer: 2000,
         button: false,
       });
+      navigate('/')
       setDisableBtnSubmit(false);
 
     } catch (error) {

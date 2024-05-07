@@ -1,0 +1,38 @@
+.auth-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10%;
+    width: 100%;
+    height: 100vh;
+}
+
+.auth-icon {
+    width: 150px;
+    height: 150px;
+    color: #6906B7;
+}
+
+.auth-text-container {
+    text-align: center;
+}
+
+.auth-text-container h1 {
+    font-size: 30px;
+}
+
+.auth-text-container p {
+    display: block;
+    font-size: 20px;
+}
+
+@media (max-width: 1180px) {
+    .auth-text-container h1 {
+        font-size: 20px;
+    }
+    .auth-text-container p {
+        font-size: 15px;
+        margin-top: 15px;
+    }
+}

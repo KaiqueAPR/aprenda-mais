@@ -4,6 +4,7 @@ import './index.css'
 
 import SignUp from './pages/SignUp/SignUp'
 import Login from './pages/Login/Login'
+import EmailAuth from './pages/EmailAuth/EmailAuth'
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom"
 
@@ -19,7 +20,11 @@ const router = createBrowserRouter([
   {
     path: "/cadastro",
     element: <SignUp />,
-  }
+  },
+  {
+    path: `/usuario/autenticacao`,//verificar como trabalhar a questão dos IDs
+    element: <EmailAuth />,
+  },
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')).render(
