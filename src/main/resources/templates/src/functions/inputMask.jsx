@@ -1,12 +1,17 @@
-export const InputMask = ({ regex, value, inputName }) => {
+export const InputMask = ({ value, inputName }) => {
 
 
-    const maskDdd = (value, regex, type) => {
+    const maskDdd = (value) => {
         // 1 - Verificar se o valor e igual = (00 ou se e igual a 
         const regexOnlyTwoNummbers = /\(\d{2}/
 
         if (regexOnlyTwoNummbers.test(value)) {
+            if (value.length === 3) {
+                return value + ')'
+            } 
+            else {
             return value
+        }
             // Se Sim ele retorna o valor sem alteração
         } else {
             // se nao ira remover todos os caracteres que nao sejam numeros
@@ -14,11 +19,10 @@ export const InputMask = ({ regex, value, inputName }) => {
             return mask.replace(/(\d{2})/, '($1)');
             // E adiciona a mascara (00)
         }
-        return 'a';
 
     }
 
-    const maskPhone = (value, regex, type) => {
+    const maskPhone = (value) => {
         const mask = value.replace(/\D/g, '');
         if (mask.length >= 6) {
             const maskValue = mask.replace(/(\d{5})(\d{1})/g, '$1-$2');
@@ -28,7 +32,7 @@ export const InputMask = ({ regex, value, inputName }) => {
         }
     }
 
-    const maskCpf = (value, regex, type) => {
+    const maskCpf = (value) => {
         const mask = value.replace(/\D/g, '');
 
         if (mask.length >= 4 && mask.length <= 6) {
@@ -54,7 +58,7 @@ export const InputMask = ({ regex, value, inputName }) => {
 
     }
 
-    const maskCep = (value, regex, type) => {
+    const maskCep = (value) => {
         const mask = value.replace(/\D/g, '');
          if (mask.length >= 6) {
             return mask.replace(/(\d{5})(\d{1})/, '$1-$2');
@@ -66,19 +70,19 @@ export const InputMask = ({ regex, value, inputName }) => {
 
     switch (inputName) {
         case 'ddd':
-            return maskDdd(value, regex, 'ddd')
+            return maskDdd(value)
 
         case 'telefone':
-            return maskPhone(value, regex, 'telefone')
+            return maskPhone(value)
 
         case 'cpf':
-            return maskCpf(value, regex, 'cpf')
+            return maskCpf(value)
 
         case 'cep':
-            return maskCep(value, regex, 'cep')
+            return maskCep(value)
 
         default:
-            return '';
+            return value + "T";
     }
 
 
