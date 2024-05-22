@@ -29,7 +29,7 @@ function newObjValidatorNome() {
     return ({
         required: {
             value: true,
-            message: "O campo nome e obrigatorio"
+            message: "O campo nome e obrigatório."
         },
         minLength: {
             value: 5,
@@ -42,7 +42,7 @@ function newObjValidatorCpf() {
     return ({
         required: {
             value: true,
-            message: "O campo CPF e obrigatorio"
+            message: "O campo CPF e obrigatório."
         },
         minLength: {
             value: 11,
@@ -55,7 +55,7 @@ function newObjValidatorDdd() {
     return ({
         required: {
             value: true,
-            message: "O campo DDD e obrigatorio"
+            message: "O campo DDD e obrigatório."
         },
         minLength: {
             value: 2,
@@ -68,7 +68,7 @@ function newObjValidatorTel() {
     return ({
         required: {
             value: true,
-            message: "O campo telefone e obrigatorio"
+            message: "O campo telefone e obrigatório."
         },
         minLength: {
             value: 10,
@@ -81,7 +81,7 @@ function newObjValidatorDate() {
     return ({
         required: {
             value: true,
-            message: "O campo data de nascimento e obrigatorio"
+            message: "O campo data de nascimento e obrigatório."
         },
         minLength: {
             value: 10,
@@ -94,7 +94,7 @@ function newObjValidatorEmail() {
     return ({
         required: {
             value: true,
-            message: "O campo email e obrigatorio"
+            message: "O campo email e obrigatório."
         },
         pattern: {
             value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
@@ -107,7 +107,7 @@ function newObjValidatorPassword() {
     return ({
         required: {
             value: true,
-            message: "O campo senha e obrigatorio"
+            message: "O campo senha e obrigatório."
         },
         minLength: {
             value: 8,
@@ -124,7 +124,7 @@ function newObjValidatorCep() {
     return ({
         required: {
             value: true,
-            message: "O campo CEP e obrigatorio"
+            message: "O campo CEP e obrigatório."
         },
         minLength: {
             value: 9,
@@ -137,7 +137,7 @@ function newObjValidatorAddress() {
     return ({
         required: {
             value: true,
-            message: "O campo logradouro e obrigatorio"
+            message: "O campo logradouro e obrigatório."
         },
         minLength: {
             value: 5,
