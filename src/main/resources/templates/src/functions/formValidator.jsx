@@ -45,8 +45,23 @@ function newObjValidatorCpf() {
             message: "O campo CPF e obrigatorio"
         },
         minLength: {
-            value: 11,
+            value: 14,
             message: "Digite os 11 digitos do CPF (Somente Numeros)"
+        },
+        validate: {
+            notValidCpf: (value) => { 
+                return (value !== '000.000.000-00' && 
+                value !== '111.111.111-11' && 
+                value !== '222.222.222-22' &&
+                 value !== '333.333.333-33' && 
+                 value !== '444.444.444-44' &&
+                  value !== '555.555.555-55' &&
+                   value !== '666.666.666-66' && 
+                   value !== '77777777777' && 
+                   value !== '88888888888' &&
+                    value !== '99999999999' || "CPF REPROVADO"
+            );
+            }
         }
     })
 }
@@ -114,7 +129,7 @@ function newObjValidatorPassword() {
             message: "A senha deve ter no minimo 8 caracteres"
         },
         pattern: {
-            value: /[ !@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/,
+            value: /[ !@#$%^&*()_+\-=\\[\]{};':"\\|,.<>\\/?]/,
             message: 'A senha deve conter pelo menos um caracter especial'
         }
     })
