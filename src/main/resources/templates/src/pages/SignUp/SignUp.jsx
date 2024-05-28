@@ -99,7 +99,7 @@ const SignUp = () => {
 
     }
 
-    console.log('O error e : ',errors);
+    console.log('O error e : ', errors);
     console.log('O isDirty e : ', isDirty);
     console.log('O isValid e : ', isValid);
     console.log('O VALOR  e : ', getValues());
@@ -108,7 +108,7 @@ const SignUp = () => {
 
 
   const onSubmit = async (data) => {
-    
+
     event.preventDefault();
 
     let body = data;
@@ -118,7 +118,7 @@ const SignUp = () => {
     body.ddd = body.ddd.replace(/\D/g, '');
 
     setShowLoadingSpinner(true);
-    
+
     try {
       const response = await fetch('http://localhost:8080/usuario/novo', {
         // const response = await fetch('https://webhook.site/5509b105-dfea-4f9a-94b1-30db32476782', {
@@ -150,7 +150,7 @@ const SignUp = () => {
     if (getValues('cep') !== '') {
       setValue('cep', InputMask({ value: getValues('cep'), inputName: 'cep' }), { shouldValidate: true });
     }
-  if (getValues('cep').length === 9) {
+    if (getValues('cep').length === 9) {
       let cepNumber = getValues('cep').replace(/\D/g, '');
       searchAddressByCep(cepNumber);
     }
@@ -170,19 +170,19 @@ const SignUp = () => {
         }
 
         const jsonData = await response.json();
-        if (!jsonData.erro) { 
+        if (!jsonData.erro) {
 
           const endereco = `Rua: ${jsonData.logradouro}, Bairro: ${jsonData.bairro}, Cidade: ${jsonData.localidade}, Estado: ${jsonData.uf}`;
-          setValue('logradouro', endereco,{ shouldValidate: true });
+          setValue('logradouro', endereco, { shouldValidate: true });
           console.log('Endereço:', endereco);
           setDisableLogadouro(true);
         } else {
 
-          setValue('logradouro', '',{ shouldValidate: true });
+          setValue('logradouro', '', { shouldValidate: true });
           setDisableLogadouro(false);
 
         }
-        
+
 
 
         // esse setdados e diferente
@@ -223,7 +223,7 @@ const SignUp = () => {
             {showForm1 ? (
               <>
                 <div className="form-group">
-                  <label htmlFor="nome">Nome Completo</label>
+                  <label htmlFor="nome">Nome Completo*</label>
                   <input
                     type="text"
                     className={!errors?.nome ? "signup-form-input" : "invalid-signup-form-input"}
@@ -236,7 +236,7 @@ const SignUp = () => {
                 </div>
 
                 <div className="form-group">
-                  <label htmlFor="cpf">CPF</label>
+                  <label htmlFor="cpf">CPF*</label>
                   <input
                     type="text"
                     maxLength={14}
@@ -251,7 +251,7 @@ const SignUp = () => {
                 </div>
 
                 <div className="form-group">
-                  <label htmlFor="ddd">DDD</label>
+                  <label htmlFor="ddd">DDD*</label>
                   <input
                     maxLength={4}
                     type="text"
@@ -266,7 +266,7 @@ const SignUp = () => {
                 </div>
 
                 <div className="form-group">
-                  <label htmlFor="telefone">Telefone</label>
+                  <label htmlFor="telefone">Telefone*</label>
                   <input
                     maxLength={10}
                     type="text"
@@ -281,7 +281,7 @@ const SignUp = () => {
                 </div>
 
                 <div className="form-group">
-                  <label htmlFor="dtNascimento">Data de Nascimento</label>
+                  <label htmlFor="dtNascimento">Data de Nascimento*</label>
                   <input
                     maxLength={10}
                     type="date"
@@ -295,7 +295,7 @@ const SignUp = () => {
                   }
                 </div>
 
-                <div className="form-group">
+                <div className="form-group-btn-next">
                   <button
                     type="button"
                     disabled={disableBtnVoltar}
@@ -359,7 +359,7 @@ const SignUp = () => {
                     <p className="error-message">{errors.cep?.message}</p>
                   }{!errors?.cep &&
                     <p className='info-message'>Digite o seu cep que corretamente que iremos completar o seu endereço</p>
-                    }
+                  }
                 </div>
 
 
@@ -462,7 +462,7 @@ const SignUp = () => {
                   />
                 </div> */}
 
-                <div className="form-group">
+                <div className="form-group-btn">
                   <button
                     type="button"
                     onClick={() => {
@@ -475,9 +475,6 @@ const SignUp = () => {
                   >
                     Voltar
                   </button>
-                </div>
-
-                <div className="form-group">
                   <button
                     type="submit"
                     disabled={showLoadingSpinner || !isValid || !isDirty}
