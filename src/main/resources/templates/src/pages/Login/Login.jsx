@@ -1,25 +1,23 @@
-import { React, useState } from 'react'
-import { Link } from 'react-router-dom'
-import swal from 'sweetalert'
-import Joyride from 'react-joyride'
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import swal from 'sweetalert';
+import Joyride from 'react-joyride';
 
-
-import SideTitle from '../../components/SideTitle/SideTitle'
-import '../Login/login.css'
+import SideTitle from '../../components/SideTitle/SideTitle';
+import '../Login/login.css';
 
 import { IoHelpCircle } from "react-icons/io5";
-import { set } from 'react-hook-form'
-
 
 const Login = () => {
+
+  const navigate = useNavigate();
+
   const [loginRequestFront, setDadosLogin] = useState({ login: '', senha: '' });
 
   const handleChangeLogin = (event) => {
     const { name, value } = event.target;
     setDadosLogin({ ...loginRequestFront, [name]: value });
   };
-
-  console.log("Login Request: " + loginRequestFront + " - setDadosLogin: " + setDadosLogin)
 
   const handleSubmitLogin = (event) => {
     event.preventDefault();
@@ -52,6 +50,8 @@ const Login = () => {
           icon: "success",
           timer: 2000,
           button: false,
+        }).then(() => {
+          navigate("/home", { replace: true });
         });
       })
       .catch((error) => {
@@ -112,4 +112,4 @@ const Login = () => {
   )
 }
 
-export default Login
+export default Login;
