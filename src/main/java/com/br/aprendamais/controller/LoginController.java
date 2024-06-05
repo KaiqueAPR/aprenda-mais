@@ -17,7 +17,7 @@ public class LoginController {
     private Login loginService;
 
     @PostMapping("")
-    public boolean novoUsuario(@RequestBody @Valid LoginRequest loginRequest) {
+    public boolean loginUsuario(@RequestBody @Valid LoginRequest loginRequest) {
         return loginService.loginUsuario(loginRequest);
     }
 }

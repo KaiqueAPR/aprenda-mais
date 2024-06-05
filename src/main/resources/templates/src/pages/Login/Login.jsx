@@ -8,15 +8,18 @@ import SideTitle from '../../components/SideTitle/SideTitle'
 import '../Login/login.css'
 
 import { IoHelpCircle } from "react-icons/io5";
+import { set } from 'react-hook-form'
 
 
 const Login = () => {
-  const [dadosLogin, setDadosLogin] = useState('');
+  const [loginRequestFront, setDadosLogin] = useState({ login: '', senha: '' });
 
   const handleChangeLogin = (event) => {
     const { name, value } = event.target;
-    setDadosLogin({ ...dadosLogin, [name]: value });
+    setDadosLogin({ ...loginRequestFront, [name]: value });
   };
+
+  console.log("Login Request: " + loginRequestFront + " - setDadosLogin: " + setDadosLogin)
 
   const handleSubmitLogin = (event) => {
     event.preventDefault();
@@ -26,7 +29,7 @@ const Login = () => {
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(dadosLogin)
+      body: JSON.stringify(loginRequestFront)
     })
       .then((response) => {
         if (!response.ok) {
@@ -79,7 +82,7 @@ const Login = () => {
               </div>
               <input
                 type="text"
-                name="Login"
+                name="login"
                 className="login-form-input"
                 placeholder='Insira o email ou telefone'
                 onChange={handleChangeLogin}
@@ -92,7 +95,7 @@ const Login = () => {
               </div>
               <input
                 type="password"
-                name="Senha"
+                name="senha"
                 className="login-form-input"
                 placeholder='Insira sua senha'
                 onChange={handleChangeLogin}
