@@ -1,0 +1,32 @@
+body {
+    background-color: #2D2D2D;
+}
+
+.home-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 80vh;
+    gap: 5%;
+    padding: 30px;
+}
+
+.user-hello {
+    color: white;
+    font-weight: bold;
+    font-size: 50px;
+}
+
+.courses-container {
+    color: white;
+}
+
+.courses-carousel-title {
+    font-size: 25px;
+}
+
+.courses-list {
+    display: flex;
+    align-items: center;justify-content: space-around;
+    height: 150px;
+}
