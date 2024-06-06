@@ -1,32 +1,40 @@
-import { React, useState } from 'react'
-import { Link } from 'react-router-dom'
-import swal from 'sweetalert'
-import Joyride from 'react-joyride'
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import swal from 'sweetalert';
+import Joyride from 'react-joyride';
 
-
-import SideTitle from '../../components/SideTitle/SideTitle'
-import '../Login/login.css'
+import SideTitle from '../../components/SideTitle/SideTitle';
+import '../Login/login.css';
 
 import { IoHelpCircle } from "react-icons/io5";
 
-
 const Login = () => {
-  const [dadosLogin, setDadosLogin] = useState('');
+
+  const navigate = useNavigate();
+
+  const [loginFormData, setLoginFormData] = useState({ login: '', password: '' });
 
   const handleChangeLogin = (event) => {
     const { name, value } = event.target;
-    setDadosLogin({ ...dadosLogin, [name]: value });
+    setLoginFormData(previous => ({ ...previous, [name]: value }));
   };
+
+  useEffect(() => {
+    const token = localStorage.getItem("aprendamais.token");
+    if (token != null && token != "") {
+      navigate("/home", { replace: true });
+    }
+  })
 
   const handleSubmitLogin = (event) => {
     event.preventDefault();
 
-    fetch('http://localhost:8080/login', {
+    fetch('http://localhost:8080/auth/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(dadosLogin)
+      body: JSON.stringify(loginFormData)
     })
       .then((response) => {
         if (!response.ok) {
@@ -49,6 +57,9 @@ const Login = () => {
           icon: "success",
           timer: 2000,
           button: false,
+        }).then(() => {
+          localStorage.setItem("aprendamais.token", data.token)
+          navigate("/home", { replace: true });
         });
       })
       .catch((error) => {
@@ -79,7 +90,7 @@ const Login = () => {
               </div>
               <input
                 type="text"
-                name="Login"
+                name="login"
                 className="login-form-input"
                 placeholder='Insira o email ou telefone'
                 onChange={handleChangeLogin}
@@ -92,7 +103,7 @@ const Login = () => {
               </div>
               <input
                 type="password"
-                name="Senha"
+                name="password"
                 className="login-form-input"
                 placeholder='Insira sua senha'
                 onChange={handleChangeLogin}
@@ -109,4 +120,4 @@ const Login = () => {
   )
 }
 
-export default Login
+export default Login;

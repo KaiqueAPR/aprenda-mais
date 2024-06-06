@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class ReactAppController {
-    @RequestMapping(value = { "/", "/cadastro","/abc","/error"  })
+    @RequestMapping(value = {"/", "/home"})
     public String getIndex(HttpServletRequest request) {
         return "/index.html";
     }
