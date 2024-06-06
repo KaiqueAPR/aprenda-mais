@@ -12,21 +12,18 @@ public class Login {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
-    public boolean loginUsuario (LoginRequest loginRequest) {
-        boolean retorno = false;
+    public UsuarioModel loginUsuario(LoginRequest loginRequest) {
 
-        UsuarioModel usuarioModel = usuarioRepository.findFirstByEmailAndSenha(loginRequest.getLogin(), loginRequest.getSenha());
+        UsuarioModel usuarioModel;
 
-        if(!loginRequest.getLogin().contains("@")){
-            Integer loginTelefone = Integer.parseInt(loginRequest.getLogin());
-            usuarioModel = usuarioRepository.findByTelefoneAndSenha(loginTelefone, loginRequest.getSenha());
-            retorno = true;
+        if (loginRequest.getLogin().contains("@")) {
+            usuarioModel = usuarioRepository.findByEmail(loginRequest.getLogin());
+        } else {
+            usuarioModel = usuarioRepository.findByTelefone(Integer.valueOf(loginRequest.getLogin()));
         }
-
-        if(usuarioModel != null){
-            retorno = true;
+        if (usuarioModel != null && usuarioModel.getSenha().equals(loginRequest.getPassword())) {
+            return usuarioModel;
         }
-
-        return retorno;
+        return null;
     }
 }

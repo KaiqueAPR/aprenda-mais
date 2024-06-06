@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import swal from 'sweetalert';
 import Joyride from 'react-joyride';
@@ -12,22 +12,29 @@ const Login = () => {
 
   const navigate = useNavigate();
 
-  const [loginRequestFront, setDadosLogin] = useState({ login: '', senha: '' });
+  const [loginFormData, setLoginFormData] = useState({ login: '', password: '' });
 
   const handleChangeLogin = (event) => {
     const { name, value } = event.target;
-    setDadosLogin({ ...loginRequestFront, [name]: value });
+    setLoginFormData(previous => ({ ...previous, [name]: value }));
   };
+
+  useEffect(() => {
+    const token = localStorage.getItem("aprendamais.token");
+    if (token != null && token != "") {
+      navigate("/home", { replace: true });
+    }
+  })
 
   const handleSubmitLogin = (event) => {
     event.preventDefault();
 
-    fetch('http://localhost:8080/login', {
+    fetch('http://localhost:8080/auth/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(loginRequestFront)
+      body: JSON.stringify(loginFormData)
     })
       .then((response) => {
         if (!response.ok) {
@@ -51,6 +58,7 @@ const Login = () => {
           timer: 2000,
           button: false,
         }).then(() => {
+          localStorage.setItem("aprendamais.token", data.token)
           navigate("/home", { replace: true });
         });
       })
@@ -95,7 +103,7 @@ const Login = () => {
               </div>
               <input
                 type="password"
-                name="senha"
+                name="password"
                 className="login-form-input"
                 placeholder='Insira sua senha'
                 onChange={handleChangeLogin}

@@ -15,5 +15,5 @@ public class LoginRequest {
     @NotBlank(message = "A Senha deve ser preenchida!")
     @NotNull(message = "A Senha não pode ser nula!")
     @Size(max = 255, message = "A Senha deve conter no máximo 255 caracteres!")
-    private String senha;
+    private String password;
 }
