@@ -59,6 +59,7 @@ const Login = () => {
           button: false,
         }).then(() => {
           localStorage.setItem("aprendamais.token", data.token)
+          localStorage.setItem("aprendamais.nome", data.nome)
           navigate("/home", { replace: true });
         });
       })

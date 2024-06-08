@@ -51,18 +51,24 @@ public class AuthController {
 
         final String token = jwtTokenUtil.generateToken(usuario);
 
-        return ResponseEntity.ok(new JwtResponse(token));
+        return ResponseEntity.ok(new JwtResponse(token, usuario.getNome()));
     }
 
     class JwtResponse {
         private final String token;
+        private final String nome;
 
-        public JwtResponse(String token) {
+        public JwtResponse(String token, String nome) {
             this.token = token;
+            this.nome = nome;
         }
 
         public String getToken() {
             return token;
+        }
+
+        public String getNome(){
+            return nome;
         }
     }
 }
