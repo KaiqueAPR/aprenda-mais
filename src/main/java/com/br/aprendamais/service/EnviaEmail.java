@@ -49,7 +49,7 @@ public class EnviaEmail {
         try {
             Message message = new MimeMessage(session);
             message.setFrom(new InternetAddress("aprenda_mais_@hotmail.com"));
-            message.setContent(corpoEmail, "text/html"); // Configura o conteúdo como HTML
+            message.setContent(corpoEmail, "text/html; charset=UTF-8"); // Configura o conteúdo como HTML
             Address[] toUser = InternetAddress.parse(emailDestinatario);
             message.setRecipients(Message.RecipientType.TO, toUser);
             message.setSubject(tituloEmail);

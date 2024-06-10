@@ -1,20 +1,25 @@
 package com.br.aprendamais.service;
 
 import com.br.aprendamais.configs.exceptions.UsuarioNotFound;
+
 import com.br.aprendamais.model.UsuarioModel;
 import com.br.aprendamais.repository.UsuarioRepository;
 import com.br.aprendamais.request.UsuarioRequest;
 import com.br.aprendamais.response.UsuarioResponse;
+
 import jakarta.validation.Valid;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import com.br.aprendamais.service.ChatBotWhatsApp;
+
+import java.io.*;
 import java.util.Optional;
+
+import java.util.stream.Collectors;
 
 @Service
 public class CadastroUsuario extends EnviaEmail {
@@ -22,23 +27,50 @@ public class CadastroUsuario extends EnviaEmail {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
+    @Autowired
+    private CadastroCodigoUsuario cadastroCodigoUsuario;
+
+    @Autowired
+    private  ChatBotWhatsApp chatBotWhatsApp;
+
     /*Método responsável por criar um novo Usuário*/
     public UsuarioResponse novoUsuario(@RequestBody @Valid UsuarioRequest usuarioRequest) {
+        //var token = chatBotWhatsApp.gerarToken();
+
         UsuarioModel usuarioModel = new UsuarioModel();
         usuarioModel.setCkAutenticacao(false);
         BeanUtils.copyProperties(usuarioRequest, usuarioModel);
         usuarioModel = usuarioRepository.save(usuarioModel);
 
+
         // Caminho do arquivo HTML
-        String filePath = "C:\\Projetos\\Fontes\\aprenda-mais\\src\\main\\java\\com\\br\\aprendamais\\templates\\EmailAutenticacao.html";
+        String filePath = "src/main/java/com/br/aprendamais/templates/EmailAutenticacao.html";
+        String corpoEmail = "";
 
-        // Ler o conteúdo do arquivo HTML
-        String corpoEmail = readHTMLFile(filePath);
+        // Tenta ler o arquivo html que tem o email
+        try {
+            //cadastroCodigoUsuario.salvaCodigo(100,usuarioModel.getDtNascimento());
+            corpoEmail = readFile(filePath);
+            corpoEmail = corpoEmail.replace("#codigo",cadastroCodigoUsuario.salvaCodigo(usuarioModel.getId(),usuarioModel.getDtNascimento()));
+            corpoEmail = corpoEmail.replace("#nome",usuarioModel.getNome());
 
-        String tituloEmail = "Aprenda+ - Código de Autenticação";
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+            corpoEmail = "<p>Ola #nome ,</p><br><p>O seu codigo e #codigo</p>";
+
+            // Rescrevo a tag #codigo
+            corpoEmail = corpoEmail.replace("#codigo",cadastroCodigoUsuario.salvaCodigo(usuarioModel.getId(),usuarioModel.getDtNascimento()));
+
+            // Rescrevo a tag #nome para o nome do aluno cadastrado , que vai ser enviado por email
+            corpoEmail = corpoEmail.replace("#nome",usuarioModel.getNome());
+        }
+
+        String tituloEmail = "Aprenda + - Código de Autenticação";
 
         //Envio de autenticação de e-mail
         enviarEmail(usuarioModel.getEmail(), tituloEmail, corpoEmail);
+
+
 
         return converteParaDto(usuarioModel);
     }
@@ -75,7 +107,8 @@ public class CadastroUsuario extends EnviaEmail {
 
         return usuarioResponse;
     }
-    private static String readHTMLFile(String filePath) {
+
+   /* private  static String readHTMLFile(String filePath) {
         StringBuilder contentBuilder = new StringBuilder();
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
             String line;
@@ -87,5 +120,26 @@ public class CadastroUsuario extends EnviaEmail {
         }
         return contentBuilder.toString();
     }
+*/
+
+    private static String readFile (String filePath) throws IOException {
+        File file = new File(filePath);
+        BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
+
+        // Lê as linhas do arquivo e junta em uma única string, depois divide em um array
+        String valorLido = bufferedReader.lines().collect(Collectors.joining("\n"));
+
+        // Imprime a lista resultante
+        System.out.println(valorLido);
+
+        // Fechar o BufferedReader
+        bufferedReader.close();
+
+        return valorLido;
+    }
+
+
+
+
 
 }
