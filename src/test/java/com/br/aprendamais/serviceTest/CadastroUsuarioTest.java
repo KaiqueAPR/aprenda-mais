@@ -7,9 +7,6 @@ import com.br.aprendamais.response.UsuarioResponse;
 import com.br.aprendamais.service.CadastroUsuario;
 import com.br.aprendamais.service.EnviaEmail;
 
-import jakarta.validation.Validation;
-import jakarta.validation.ValidationException;
-
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
