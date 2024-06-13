@@ -17,10 +17,7 @@ import javax.mail.internet.MimeMessage;
 @Service
 public class EnviaEmail {
 
-    @Autowired
-    private static UsuarioModel usuarioModel;
-
-    public static void enviarEmail(String emailDestinatario, String tituloEmail, String corpoEmail) {
+    public void enviarEmail(String emailDestinatario, String tituloEmail, String corpoEmail) {
         Properties props = new Properties();
 
         /* Parâmetros de conexão com servidor Outlook */
@@ -35,8 +32,7 @@ public class EnviaEmail {
 
         Session session = Session.getDefaultInstance(props,
                 new javax.mail.Authenticator() {
-                    protected PasswordAuthentication getPasswordAuthentication()
-                    {
+                    protected PasswordAuthentication getPasswordAuthentication() {
                         return new PasswordAuthentication(
                                 "aprenda_mais_@hotmail.com",
                                 "Aprenda+123");
