@@ -21,7 +21,9 @@ public class CadastroCodigoUsuario {
         usuarioCodigo.setIdUsuario(idUsuario);
         usuarioCodigo.setCodigo(geraCodigo(dtNacimento));
         usuarioCodigo.setDtExpiracao(LocalDateTime.now().plusMinutes(30));
+
         BeanUtils.copyProperties(usuarioCodigo,usuarioCodigo);
+
         // Salva os valore no banco de dados
         usuarioCodigoRepository.save(usuarioCodigo);
 
@@ -30,8 +32,8 @@ public class CadastroCodigoUsuario {
 
     private Integer geraCodigo(LocalDate dtNacimento) {
         String stringData = String.valueOf(dtNacimento).replace("-","");
-
-        Integer codigo  = (int) (Math.random() + Integer.valueOf(stringData));
+        int numero = (int) (Math.random() * 200);
+        Integer codigo  = (numero + Integer.valueOf(stringData));
 
         return codigo;
     }

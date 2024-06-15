@@ -1,13 +1,14 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
 import './index.css'
 
-import SignUp from './pages/SignUp/SignUp'
-import Login from './pages/Login/Login'
+import { RouterProvider, createBrowserRouter } from "react-router-dom"
+
 import EmailAuth from './pages/EmailAuth/EmailAuth'
 import Home from './pages/Home/Home'
-
-import { createBrowserRouter, RouterProvider } from "react-router-dom"
+import Login from './pages/Login/Login'
+import React from 'react'
+import ReactDOM from 'react-dom/client'
+import SignUp from './pages/SignUp/SignUp'
+import ValidateAccont from './pages/ValidAccount/ValidAccount'
 
 const router = createBrowserRouter([
    {
@@ -30,6 +31,10 @@ const router = createBrowserRouter([
     path: "/home",
     element: <Home />,
   },
+  {
+    path: "/validaconta/:codigo",
+    element: <ValidateAccont />,
+  }
 
 ]);
 

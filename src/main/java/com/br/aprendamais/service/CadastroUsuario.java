@@ -14,12 +14,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import com.br.aprendamais.service.ChatBotWhatsApp;
-
 import java.io.*;
 import java.util.Optional;
 
 import java.util.stream.Collectors;
+
 
 @Service
 public class CadastroUsuario extends EnviaEmail {
@@ -31,38 +30,57 @@ public class CadastroUsuario extends EnviaEmail {
     private CadastroCodigoUsuario cadastroCodigoUsuario;
 
     @Autowired
-    private  ChatBotWhatsApp chatBotWhatsApp;
+    private ChatBotWhatsApp chatBotWhatsApp;
 
     /*Método responsável por criar um novo Usuário*/
     public UsuarioResponse novoUsuario(@RequestBody @Valid UsuarioRequest usuarioRequest) {
-        //var token = chatBotWhatsApp.gerarToken();
 
         UsuarioModel usuarioModel = new UsuarioModel();
         usuarioModel.setCkAutenticacao(false);
         BeanUtils.copyProperties(usuarioRequest, usuarioModel);
         usuarioModel = usuarioRepository.save(usuarioModel);
 
-
         // Caminho do arquivo HTML
         String filePath = "src/main/java/com/br/aprendamais/templates/EmailAutenticacao.html";
         String corpoEmail = "";
 
+        /*Gera Codigo*/
+        String codigo = cadastroCodigoUsuario.salvaCodigo(usuarioModel.getId(), usuarioModel.getDtNascimento());
+
+
+        /*
+         * OBS: Como a rotina de Whatsapp ainda nao esta 100% mapeada ,
+         * eu trato ela de forma assincrona
+         * */
+        try {
+            /* Whatsapp */
+            String wppMessage = "Olá! *#nome* \\nBem-vindo(a) à Aprenda ➕\\nEstamos aqui para ajudar você a adquirir as habilidades necessárias \\npara avançar na sua carreira profissional \uD83C\uDF93\uD83D\uDCA1 \\nSeu código de validação é *#codigo*. Ele expira em 30 minutos.\\r \\nCaso ele venha a expirar voce pode solicitar um novo no link \n#link  \\nSe precisar de ajuda, conte conosco. Vamos juntos rumo ao sucesso! \uD83D\uDE80";
+            wppMessage = wppMessage.replace("#nome", usuarioModel.getNome());
+            wppMessage = wppMessage.replace("#codigo", codigo);
+            wppMessage = wppMessage.replace("#link", "https://app.aprenda-mais.cloud/recuperar-senha");
+            chatBotWhatsApp.enviarMensagem(String.valueOf("55" + usuarioModel.getDdd() + usuarioModel.getTelefone()), wppMessage);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
         // Tenta ler o arquivo html que tem o email
         try {
-            //cadastroCodigoUsuario.salvaCodigo(100,usuarioModel.getDtNascimento());
+            /* Email*/
             corpoEmail = readFile(filePath);
-            corpoEmail = corpoEmail.replace("#codigo",cadastroCodigoUsuario.salvaCodigo(usuarioModel.getId(),usuarioModel.getDtNascimento()));
-            corpoEmail = corpoEmail.replace("#nome",usuarioModel.getNome());
+            corpoEmail = corpoEmail.replace("#codigo", codigo);
+            corpoEmail = corpoEmail.replace("#nome", usuarioModel.getNome());
 
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
+
+            // Caso não consiga ler o arquivo html , manda um texto simples por email
             corpoEmail = "<p>Ola #nome ,</p><br><p>O seu codigo e #codigo</p>";
 
             // Rescrevo a tag #codigo
-            corpoEmail = corpoEmail.replace("#codigo",cadastroCodigoUsuario.salvaCodigo(usuarioModel.getId(),usuarioModel.getDtNascimento()));
+            corpoEmail = corpoEmail.replace("#codigo", cadastroCodigoUsuario.salvaCodigo(usuarioModel.getId(), usuarioModel.getDtNascimento()));
 
             // Rescrevo a tag #nome para o nome do aluno cadastrado , que vai ser enviado por email
-            corpoEmail = corpoEmail.replace("#nome",usuarioModel.getNome());
+            corpoEmail = corpoEmail.replace("#nome", usuarioModel.getNome());
         }
 
         String tituloEmail = "Aprenda + - Código de Autenticação";
@@ -70,12 +88,10 @@ public class CadastroUsuario extends EnviaEmail {
         //Envio de autenticação de e-mail
         enviarEmail(usuarioModel.getEmail(), tituloEmail, corpoEmail);
 
-
-
         return converteParaDto(usuarioModel);
     }
 
-    public UsuarioResponse autenticarUsuario(Integer id){
+    public UsuarioResponse autenticarUsuario(Integer id) {
         UsuarioModel usuario = pesquisaUsuario(id);
         if (!usuario.isCkAutenticacao()) {
             usuario.setCkAutenticacao(true);
@@ -122,7 +138,7 @@ public class CadastroUsuario extends EnviaEmail {
     }
 */
 
-    private static String readFile (String filePath) throws IOException {
+    private static String readFile(String filePath) throws IOException {
         File file = new File(filePath);
         BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
 
@@ -130,16 +146,13 @@ public class CadastroUsuario extends EnviaEmail {
         String valorLido = bufferedReader.lines().collect(Collectors.joining("\n"));
 
         // Imprime a lista resultante
-        System.out.println(valorLido);
+        //System.out.println(valorLido);
 
         // Fechar o BufferedReader
         bufferedReader.close();
 
         return valorLido;
     }
-
-
-
 
 
 }
