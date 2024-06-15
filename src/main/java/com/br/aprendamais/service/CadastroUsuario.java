@@ -1,27 +1,28 @@
 package com.br.aprendamais.service;
 
-import com.br.aprendamais.configs.exceptions.UsuarioNotFound;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
+
+import com.br.aprendamais.configs.exceptions.UsuarioNotFound;
 import com.br.aprendamais.model.UsuarioModel;
 import com.br.aprendamais.repository.UsuarioRepository;
 import com.br.aprendamais.request.UsuarioRequest;
 import com.br.aprendamais.response.UsuarioResponse;
 
 import jakarta.validation.Valid;
-import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-
-import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
-
-import java.io.*;
-import java.util.Optional;
-
-import java.util.stream.Collectors;
 
 
 @Service
-public class CadastroUsuario extends EnviaEmail {
+public class CadastroUsuario {
 
     @Autowired
     private UsuarioRepository usuarioRepository;
@@ -32,9 +33,20 @@ public class CadastroUsuario extends EnviaEmail {
     @Autowired
     private ChatBotWhatsApp chatBotWhatsApp;
 
-    /*Método responsável por criar um novo Usuário*/
-    public UsuarioResponse novoUsuario(@RequestBody @Valid UsuarioRequest usuarioRequest) {
+    @Autowired
+    private EnviaEmail enviaEmail;
 
+    public CadastroUsuario(UsuarioRepository usuarioRepository, EnviaEmail enviaEmail) {
+        this.usuarioRepository = usuarioRepository;
+        this.enviaEmail = enviaEmail;
+    }
+
+    public CadastroUsuario() {
+        super();
+    }
+
+    /* Método responsável por criar um novo Usuário */
+    public UsuarioResponse novoUsuario(UsuarioRequest usuarioRequest) {
         UsuarioModel usuarioModel = new UsuarioModel();
         usuarioModel.setCkAutenticacao(false);
         BeanUtils.copyProperties(usuarioRequest, usuarioModel);
@@ -85,8 +97,8 @@ public class CadastroUsuario extends EnviaEmail {
 
         String tituloEmail = "Aprenda + - Código de Autenticação";
 
-        //Envio de autenticação de e-mail
-        enviarEmail(usuarioModel.getEmail(), tituloEmail, corpoEmail);
+        // Envio de autenticação de e-mail
+        enviaEmail.enviarEmail(usuarioModel.getEmail(), tituloEmail, corpoEmail);
 
         return converteParaDto(usuarioModel);
     }
@@ -100,7 +112,7 @@ public class CadastroUsuario extends EnviaEmail {
         return converteParaDto(usuario);
     }
 
-    /*Método responsável por localizar um Usuário através do seu ID*/
+    /* Método responsável por localizar um Usuário através do seu ID */
     public UsuarioModel pesquisaUsuario(Integer id) {
         Optional<UsuarioModel> optional = usuarioRepository.findById(id);
         if (optional.isEmpty()) {
@@ -109,8 +121,8 @@ public class CadastroUsuario extends EnviaEmail {
         return optional.get();
     }
 
-    /*Método responsável por converter um objeto para DTO*/
-    private UsuarioResponse converteParaDto(@RequestBody @Valid UsuarioModel usuarioModel) {
+    /* Método responsável por converter um objeto para DTO */
+    public UsuarioResponse converteParaDto(@RequestBody @Valid UsuarioModel usuarioModel) {
         UsuarioResponse usuarioResponse = new UsuarioResponse();
         usuarioResponse.setCep(usuarioModel.getCep());
         usuarioResponse.setCpf(usuarioModel.getCpf());
@@ -124,7 +136,7 @@ public class CadastroUsuario extends EnviaEmail {
         return usuarioResponse;
     }
 
-   /* private  static String readHTMLFile(String filePath) {
+    private static String readHTMLFile(String filePath) {
         StringBuilder contentBuilder = new StringBuilder();
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
             String line;

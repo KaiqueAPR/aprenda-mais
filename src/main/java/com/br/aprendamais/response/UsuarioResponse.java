@@ -13,6 +13,8 @@ import java.time.LocalDate;
 @Data
 public class UsuarioResponse {
 
+    private Integer Id;
+
     private String nome;
 
     private String cpf;
