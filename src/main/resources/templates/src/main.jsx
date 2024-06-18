@@ -6,6 +6,7 @@ import SignUp from './pages/SignUp/SignUp'
 import Login from './pages/Login/Login'
 import EmailAuth from './pages/EmailAuth/EmailAuth'
 import Home from './pages/Home/Home'
+import CoursesList from './pages/CoursesList/CoursesList'
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom"
 
@@ -23,12 +24,16 @@ const router = createBrowserRouter([
     element: <SignUp />,
   },
   {
-    path: `/usuario/autenticacao`,//verificar como trabalhar a questão dos IDs
+    path: "/usuario/autenticacao",
     element: <EmailAuth />,
   },
   {
     path: "/home",
     element: <Home />,
+  },
+  {
+    path: "/courses",
+    element: <CoursesList />
   },
 
 ]);

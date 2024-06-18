@@ -14,11 +14,11 @@ const Home = () => {
 
   const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   if (token == null || token == "") {
-  //     navigate("/login", { replace: true });
-  //   }
-  // }, [token])
+  useEffect(() => {
+    if (token == null || token == "") {
+      navigate("/login", { replace: true });
+    }
+  }, [token])
 
   return (
     <>

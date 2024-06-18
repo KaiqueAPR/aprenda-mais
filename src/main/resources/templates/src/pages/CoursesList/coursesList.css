@@ -1,0 +1,23 @@
+.courses-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    padding: 30px;
+}
+
+.courses-page-title {
+    text-align: center;
+    font-size: 40px;
+}
+
+.all-courses-list {
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    gap: 30px;
+    row-gap: 30px;
+    margin-top: 50px;
+    width: 85%;
+}

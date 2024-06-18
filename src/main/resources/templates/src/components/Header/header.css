@@ -57,6 +57,10 @@ button {
 
 }
 
+.header-icon-mobile {
+    display: none;
+}
+
 @media (max-width: 1180px) {
     .header-container {
         height: 80px;
@@ -71,6 +75,7 @@ button {
     }
 
     .header-icon-mobile {
+        display: block;
         width: 50px;
         height: 50px;
         cursor: pointer;
