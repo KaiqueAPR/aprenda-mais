@@ -9,21 +9,16 @@ import { IoChevronBackCircle } from "react-icons/io5";
 import '../Home/home.css'
 
 const Home = () => {
-  const arrowIconStyles = {
-    width: '50px',
-    height: '50px',
-  }
-
   const [user, setUser] = useState(localStorage.getItem("aprendamais.nome"));
   const [token, setToken] = useState(localStorage.getItem("aprendamais.token"));
 
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (token == null || token == "") {
-      navigate("/login", { replace: true });
-    }
-  }, [token])
+  // useEffect(() => {
+  //   if (token == null || token == "") {
+  //     navigate("/login", { replace: true });
+  //   }
+  // }, [token])
 
   return (
     <>
@@ -33,23 +28,23 @@ const Home = () => {
         <div className='courses-container'>
           <p className='courses-carousel-title'>Cursos em andamento</p>
           <div className='courses-list'>
-            <IoChevronBackCircle style={arrowIconStyles} />
+            <IoChevronBackCircle className='arrowIconStyles' />
             <CardCourse title={"teste"} duration={"13"} image={"https://img.freepik.com/fotos-gratis/plano-de-fundo-de-programacao-com-pessoa-trabalhando-com-codigos-no-computador_23-2150010144.jpg?t=st=1717714398~exp=1717717998~hmac=df20be3056144a755d49c6722399e43d84e8c96e555e32c7a476d5694365fe66&w=740"} />
             <CardCourse title={"teste"} duration={"13"} />
             <CardCourse title={"teste"} duration={"13"} />
             <CardCourse title={"teste"} duration={"13"} />
-            <IoChevronForwardCircle style={arrowIconStyles} />
+            <IoChevronForwardCircle className='arrowIconStyles' />
           </div>
         </div>
         <div className='courses-container'>
           <p className='courses-carousel-title'>Cursos sugeridos</p>
           <div className='courses-list'>
-            <IoChevronBackCircle style={arrowIconStyles} />
+            <IoChevronBackCircle className='arrowIconStyles'/>
             <CardCourse title={"teste"} duration={"13"} />
             <CardCourse title={"teste"} duration={"13"} />
             <CardCourse title={"teste"} duration={"13"} />
             <CardCourse title={"teste"} duration={"13"} />
-            <IoChevronForwardCircle style={arrowIconStyles} />
+            <IoChevronForwardCircle className='arrowIconStyles'/>
           </div>
         </div>
       </section>
