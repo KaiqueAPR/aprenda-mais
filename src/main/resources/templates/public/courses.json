@@ -1,0 +1,37 @@
+[
+    {
+      "courseName": "Curso de Programação",
+      "modules": [
+        {
+          "moduleName": "Módulo 1: Introdução",
+          "lessons": [
+            { "name": "Aula 1", "completed": true },
+            { "name": "Aula 2", "completed": false },
+            { "name": "Aula 3", "completed": true }
+          ]
+        },
+        {
+          "moduleName": "Módulo 2: Nome do Modulo",
+          "lessons": [
+            { "name": "Nome da aula 1", "completed": true },
+            { "name": "Nome da aula 2", "completed": true },
+            { "name": "Nome da aula 3", "completed": false }
+          ]
+        }
+      ]
+    },
+    {
+      "courseName": "Curso de Design",
+      "modules": [
+        {
+          "moduleName": "Módulo 1: Fundamentos",
+          "lessons": [
+            { "name": "Aula 1", "completed": true },
+            { "name": "Aula 2", "completed": false },
+            { "name": "Aula 3", "completed": true }
+          ]
+        }
+      ]
+    }
+  ]
+  

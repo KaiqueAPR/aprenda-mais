@@ -1,0 +1,17 @@
+.course-room-container {
+    display: flex;
+    height: 100vh;
+    color: white;
+}
+
+.modules-list-column {
+    flex: 0.3;
+    overflow-y: auto;
+    padding: 20px;
+    background-color: #161616;
+}
+
+.content-column {
+    overflow-y: auto;
+    padding: 20px;
+}
