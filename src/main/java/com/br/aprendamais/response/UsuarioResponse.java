@@ -5,7 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -13,19 +13,21 @@ import java.util.Date;
 @Data
 public class UsuarioResponse {
 
+    private Integer Id;
+
     private String nome;
 
     private String cpf;
 
-    private Number telefone;
+    private Integer telefone;
 
-    private Number ddd;
+    private Integer ddd;
 
     private String email;
 
-    private Date dtNascimento;
+    private LocalDate dtNascimento;
 
-    private Number cep;
+    private Integer cep;
 
     private String logradouro;
 

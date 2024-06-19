@@ -2,16 +2,14 @@ package com.br.aprendamais.model;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.boot.autoconfigure.domain.EntityScan;
 
-import java.util.Date;
+import java.time.LocalDate;
+
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@Setter
 @Entity
 @Table(name = "usuario")
 public class UsuarioModel {
@@ -28,21 +26,27 @@ public class UsuarioModel {
     private String cpf;
 
     @Column(name = "telefone")
-    private Number telefone;
+    private Integer telefone;
 
     @Column(name = "codigo_ddd")
-    private Number ddd;
+    private Integer ddd;
 
     @Column(name = "email")
     private String email;
 
     @Column(name = "data_nascimento")
-    private Date dtNascimento;
+    private LocalDate dtNascimento;
 
     @Column(name = "cep")
-    private Number cep;
+    private Integer cep;
 
     @Column(name = "logradouro")
     private String logradouro;
+
+    @Column(name = "senha")
+    private String senha;
+
+    @Column(name = "ckAutenticacao")
+    private boolean ckAutenticacao;
 
 }
