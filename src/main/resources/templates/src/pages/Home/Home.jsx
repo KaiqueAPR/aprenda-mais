@@ -2,6 +2,7 @@ import { React, useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom';
 import Header from '../../components/Header/Header'
 import CardCourse from '../../components/CardCourse/CardCourse';
+import Typebot from '../../components/ChatBot/TypeBot';
 
 import { IoChevronForwardCircle } from "react-icons/io5";
 import { IoChevronBackCircle } from "react-icons/io5";
@@ -47,6 +48,7 @@ const Home = () => {
             <IoChevronForwardCircle className='arrowIconStyles'/>
           </div>
         </div>
+        <Typebot />
       </section>
     </>
   )

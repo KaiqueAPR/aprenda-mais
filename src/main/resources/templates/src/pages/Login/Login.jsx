@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import swal from 'sweetalert';
-import Joyride from 'react-joyride';
 
 import SideTitle from '../../components/SideTitle/SideTitle';
+import Typebot from '../../components/ChatBot/TypeBot';
 import '../Login/login.css';
 
 import { IoHelpCircle } from "react-icons/io5";
@@ -116,6 +116,7 @@ const Login = () => {
             <p className='cadastro-link'>Não tem usuário? <Link to={'/cadastro'}>Cadastre-se</Link></p>
           </form>
         </div>
+        <Typebot />
       </section>
     </div>
   )

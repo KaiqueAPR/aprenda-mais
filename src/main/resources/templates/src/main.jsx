@@ -7,6 +7,7 @@ import Login from './pages/Login/Login'
 import EmailAuth from './pages/EmailAuth/EmailAuth'
 import Home from './pages/Home/Home'
 import CoursesList from './pages/CoursesList/CoursesList'
+import CourseRoom from './pages/CourseRoom/CourseRoom'
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom"
 
@@ -34,6 +35,10 @@ const router = createBrowserRouter([
   {
     path: "/courses",
     element: <CoursesList />
+  },
+  {
+    path: "/course-room",
+    element: <CourseRoom />
   },
 
 ]);

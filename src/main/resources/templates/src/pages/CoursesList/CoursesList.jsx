@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 import Header from '../../components/Header/Header'
 import CardCourse from '../../components/CardCourse/CardCourse'
+import Typebot from '../../components/ChatBot/TypeBot';
 
 import './coursesList.css'
 
@@ -39,6 +40,7 @@ const CoursesList = () => {
                     <CardCourse title={"teste"} duration={"13"} />
                     <CardCourse title={"teste"} duration={"13"} />
                 </div>
+                <Typebot />
             </section>
         </>
     )
