@@ -5,7 +5,8 @@
 }
 
 .modules-list-column {
-    flex: 0.3;
+    /* No flex desta coluna, quando estava sem o video o valor era 0.3 */
+    flex: 1; 
     overflow-y: auto;
     padding: 20px;
     background-color: #161616;

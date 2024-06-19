@@ -13,11 +13,11 @@ const CourseRoom = () => {
 
     const navigate = useNavigate();
 
-    // useEffect(() => {
-    //     if (token == null || token == "") {
-    //         navigate("/login", { replace: true });
-    //     }
-    // }, [token])
+    useEffect(() => {
+        if (token == null || token == "") {
+            navigate("/login", { replace: true });
+        }
+    }, [token])
 
     useEffect(() => {
         fetch('./courses.json')
@@ -38,11 +38,7 @@ const CourseRoom = () => {
                     ))}
                 </div>
                 <div className="content-column">
-                    <h2>Coluna 2</h2>
-                    <p>Conteúdo da coluna 2...</p>
-                    <p>Mais conteúdo...</p>
-                    <p>Mais conteúdo...</p>
-                    <p>Mais conteúdo...</p>
+                <iframe width="960" height="515" src="https://www.youtube.com/embed/l0qvxPPISuY?si=6Th1otOYbRd20UrX" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
                 </div>
             </div>
         </>

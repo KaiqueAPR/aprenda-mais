@@ -14,10 +14,10 @@
 
 .all-courses-list {
     display: flex;
-    justify-content: flex-start;
+    justify-content: center;
     flex-wrap: wrap;
     gap: 30px;
     row-gap: 30px;
     margin-top: 50px;
-    width: 85%;
+    width: 95%;
 }
