@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import CourseLesson from '../CourseLesson/CourseLesson';
 
+import './courseModule.css'
+
 const CourseModule = ({ moduleName, lessons }) => {
   const [isOpen, setIsOpen] = useState(false);
 

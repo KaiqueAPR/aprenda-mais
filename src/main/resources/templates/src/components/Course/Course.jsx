@@ -1,5 +1,7 @@
 import CourseModule from '../CourseModule/CourseModule';
 
+import './course.css'
+
 const Course = ({ courseName, modules }) => {
     return (
         <div className="course">

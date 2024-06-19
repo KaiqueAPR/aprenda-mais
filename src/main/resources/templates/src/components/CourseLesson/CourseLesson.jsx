@@ -1,5 +1,7 @@
 import React from 'react';
 
+import './courseLesson.css'
+
 const CourseLesson = ({ lessonName, completed }) => {
   return (
     <div className="lesson">
