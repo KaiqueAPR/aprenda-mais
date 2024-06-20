@@ -13,11 +13,7 @@ const CourseRoom = () => {
 
     const navigate = useNavigate();
 
-    useEffect(() => {
-        if (token == null || token == "") {
-            navigate("/login", { replace: true });
-        }
-    }, [token])
+    // a
 
     useEffect(() => {
         fetch('./courses.json')
@@ -38,7 +34,7 @@ const CourseRoom = () => {
                     ))}
                 </div>
                 <div className="content-column">
-                <iframe width="960" height="515" src="https://www.youtube.com/embed/l0qvxPPISuY?si=6Th1otOYbRd20UrX" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                <iframe className='iframe-video' width="960" height="515" src="https://www.youtube.com/embed/l0qvxPPISuY?si=6Th1otOYbRd20UrX" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>
                 </div>
             </div>
         </>

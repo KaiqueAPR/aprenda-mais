@@ -1,6 +1,6 @@
 .course-room-container {
     display: flex;
-    height: 100vh;
+    height: 100%;
     color: white;
 }
 
@@ -15,4 +15,18 @@
 .content-column {
     overflow-y: auto;
     padding: 20px;
+}
+
+@media (max-width: 1180px){
+    .course-room-container {
+        display: flex;
+        flex-direction: column-reverse;
+        height: 100%;
+        color: white;
+    }
+
+    .iframe-video {
+        width: 100%;
+        height: 450px;
+    }
 }
