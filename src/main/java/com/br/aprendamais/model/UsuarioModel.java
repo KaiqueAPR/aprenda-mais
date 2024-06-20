@@ -49,4 +49,7 @@ public class UsuarioModel {
     @Column(name = "ckAutenticacao")
     private boolean ckAutenticacao;
 
+    @Column(name = "contavalida")
+    private boolean contaValida;
+
 }

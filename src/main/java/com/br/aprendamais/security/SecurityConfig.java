@@ -32,7 +32,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable()
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/auth/**", "/usuario/novo").permitAll()
+                        .requestMatchers("/auth/**", "/usuario/novo","/usuario/validaconta/consulta/**").permitAll()
                         .requestMatchers("/*", "/assets/**").anonymous()
                         .anyRequest().authenticated()
                 )

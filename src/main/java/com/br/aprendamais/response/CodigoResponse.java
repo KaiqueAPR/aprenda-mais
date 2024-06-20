@@ -1,2 +1,14 @@
-package com.br.aprendamais.response;public class CodigoResponse {
+package com.br.aprendamais.response;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@Data
+public class CodigoResponse {
+    private Boolean valido;
 }

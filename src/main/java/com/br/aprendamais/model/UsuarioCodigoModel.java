@@ -23,12 +23,15 @@ public class UsuarioCodigoModel {
     @Column(name = "codigo")
     private Integer codigo;
 
+
     @Column(name = "usuario_id")
     private Integer idUsuario;
 
     @Column(name = "data_expiracao")
     private LocalDateTime dtExpiracao;
 
-
+//    @ManyToOne
+//    @JoinColumn(name = "usuario_id")
+//    private UsuarioModel usuario;
 
 }

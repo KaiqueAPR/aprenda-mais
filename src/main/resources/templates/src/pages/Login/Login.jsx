@@ -1,18 +1,11 @@
 import '../Login/login.css';
 
 import { Link, useNavigate } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { IoHelpCircle } from "react-icons/io5";
 import SideTitle from '../../components/SideTitle/SideTitle';
 import swal from 'sweetalert';
-
-//import Joyride from 'react-joyride';
-
-
-
-
-
 
 const Login = () => {
 

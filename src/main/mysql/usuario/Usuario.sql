@@ -9,5 +9,6 @@ CREATE TABLE IF NOT EXISTS `usuario` (
   `cep` DECIMAL(8,0),
   `logradouro` VARCHAR(255),
   `senha` VARCHAR(100),
-  `ckAutenticacao` BOOLEAN
+  `ckAutenticacao` BOOLEAN,
+  `contavalida` BOOLEAN
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

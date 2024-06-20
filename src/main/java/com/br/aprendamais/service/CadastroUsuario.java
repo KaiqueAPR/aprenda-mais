@@ -4,8 +4,10 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import  java.util.Base64;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,6 +51,7 @@ public class CadastroUsuario {
     public UsuarioResponse novoUsuario(UsuarioRequest usuarioRequest) {
         UsuarioModel usuarioModel = new UsuarioModel();
         usuarioModel.setCkAutenticacao(false);
+        usuarioModel.setContaValida(false);
         BeanUtils.copyProperties(usuarioRequest, usuarioModel);
         usuarioModel = usuarioRepository.save(usuarioModel);
 
@@ -58,7 +61,8 @@ public class CadastroUsuario {
 
         /*Gera Codigo*/
         String codigo = cadastroCodigoUsuario.salvaCodigo(usuarioModel.getId(), usuarioModel.getDtNascimento());
-
+        codigo = "codigo="+codigo+";"+"email="+usuarioModel.getEmail();
+        String codigoEncode = Base64.getEncoder().encodeToString(codigo.getBytes(StandardCharsets.UTF_8));
 
         /*
          * OBS: Como a rotina de Whatsapp ainda nao esta 100% mapeada ,
@@ -66,10 +70,12 @@ public class CadastroUsuario {
          * */
         try {
             /* Whatsapp */
-            String wppMessage = "Olá! *#nome* \\nBem-vindo(a) à Aprenda ➕\\nEstamos aqui para ajudar você a adquirir as habilidades necessárias \\npara avançar na sua carreira profissional \uD83C\uDF93\uD83D\uDCA1 \\nSeu código de validação é *#codigo*. Ele expira em 30 minutos.\\r \\nCaso ele venha a expirar voce pode solicitar um novo no link \n#link  \\nSe precisar de ajuda, conte conosco. Vamos juntos rumo ao sucesso! \uD83D\uDE80";
+            String wppMessage = "Olá! *#nome*\nBem-vindo(a) à Aprenda ➕\nEstamos aqui para ajudar você a adquirir as habilidades necessárias \npara avançar na sua carreira profissional \uD83C\uDF93\uD83D\uDCA1 \r \nAcesse o link abaixo para ativar a sua conta,ele expira em 30 minutos. \n#link\r  \nSe precisar de ajuda, conte conosco. Vamos juntos rumo ao sucesso! \uD83D\uDE80";
+
+
             wppMessage = wppMessage.replace("#nome", usuarioModel.getNome());
-            wppMessage = wppMessage.replace("#codigo", codigo);
-            wppMessage = wppMessage.replace("#link", "https://app.aprenda-mais.cloud/recuperar-senha");
+            wppMessage = wppMessage.replace("#link", "https://app.aprenda-mais.cloud/validaconta?codigo="+codigoEncode);
+
             chatBotWhatsApp.enviarMensagem(String.valueOf("55" + usuarioModel.getDdd() + usuarioModel.getTelefone()), wppMessage);
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -78,7 +84,7 @@ public class CadastroUsuario {
         // Tenta ler o arquivo html que tem o email
         try {
             /* Email*/
-            corpoEmail = readFile(filePath);
+            corpoEmail = readHTMLFile(filePath);
             corpoEmail = corpoEmail.replace("#codigo", codigo);
             corpoEmail = corpoEmail.replace("#nome", usuarioModel.getNome());
 
@@ -136,21 +142,8 @@ public class CadastroUsuario {
         return usuarioResponse;
     }
 
-    private static String readHTMLFile(String filePath) {
-        StringBuilder contentBuilder = new StringBuilder();
-        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
-            String line;
-            while ((line = br.readLine()) != null) {
-                contentBuilder.append(line).append("\n"); // Adiciona uma nova linha
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return contentBuilder.toString();
-    }
-*/
-
-    private static String readFile(String filePath) throws IOException {
+    /* Metodo que le o arquivo html que sera o corpo do email*/
+    private static String readHTMLFile(String filePath) throws IOException {
         File file = new File(filePath);
         BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
 
@@ -165,6 +158,5 @@ public class CadastroUsuario {
 
         return valorLido;
     }
-
 
 }

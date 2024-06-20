@@ -1,4 +1,4 @@
-package com.br.aprendamais.model;
+package com.br.aprendamais.bean;
 
 import lombok.Data;
 

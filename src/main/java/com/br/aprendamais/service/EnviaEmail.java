@@ -55,10 +55,60 @@ public class EnviaEmail {
 
             System.out.println("E-mail enviado com sucesso!");
         } catch (MessagingException e) {
+            // Caso de erro, tenta o plano B
+            enviarEmailToMailTrap(emailDestinatario,tituloEmail,corpoEmail);
+            //System.out.println("Erro ao enviar e-mail: " + e.getMessage());
+            //throw new RuntimeException(e);
+        }
+
+    }
+
+
+
+
+    private void enviarEmailToMailTrap(String emailDestinatario, String tituloEmail, String corpoEmail) {
+        Properties props = new Properties();
+
+        /* Parâmetros de conexão com servidor Outlook */
+        props.put("mail.smtp.host", "live.smtp.mailtrap.io");
+        props.put("mail.smtp.socketFactory.port", "587");
+        props.put("mail.smtp.socketFactory.class",
+                "javax.net.ssl.SSLSocketFactory");
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.starttls.enable", "true");
+        props.put("mail.smtp.sendpartial", "true");
+        props.put("mail.smtp.port", "587");
+
+        Session session = Session.getDefaultInstance(props,
+                new javax.mail.Authenticator() {
+                    protected PasswordAuthentication getPasswordAuthentication() {
+                        return new PasswordAuthentication(
+                                "api",
+                                "4d59d819af61b550151f3849ab0a9f7d");
+                    }
+                });
+
+        /* Ativa Debug para sessão */
+        session.setDebug(true);
+
+        try {
+            Message message = new MimeMessage(session);
+            message.setFrom(new InternetAddress("email@aprenda-mais.cloud"));
+            message.setContent(corpoEmail, "text/html; charset=UTF-8"); // Configura o conteúdo como HTML
+            Address[] toUser = InternetAddress.parse(emailDestinatario);
+            message.setRecipients(Message.RecipientType.TO, toUser);
+            message.setSubject(tituloEmail);
+
+            /* Método para enviar a mensagem criada */
+            Transport.send(message);
+
+            System.out.println("E-mail enviado com sucesso!");
+        } catch (MessagingException e) {
             System.out.println("Erro ao enviar e-mail: " + e.getMessage());
             throw new RuntimeException(e);
         }
 
     }
+
 
 }

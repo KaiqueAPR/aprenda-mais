@@ -1,8 +1,6 @@
 package com.br.aprendamais.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.stereotype.Service;
@@ -13,9 +11,8 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.text.MessageFormat;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.TimeUnit;
 
-import com.br.aprendamais.model.WppMessageModel;
+import com.br.aprendamais.bean.WppMessageModel;
 import org.springframework.scheduling.annotation.Async;
 
 @Configuration
@@ -34,7 +31,7 @@ public class ChatBotWhatsApp {
         WppMessageModel.TextMessage wppTexto = new WppMessageModel.TextMessage();
 
         // Definindo os valores
-        wppTexto.setText("a");
+        wppTexto.setText(mensagem);
         wppObjeto.setTextMessage(wppTexto);
         wppObjeto.setNumber(telefone);
 
