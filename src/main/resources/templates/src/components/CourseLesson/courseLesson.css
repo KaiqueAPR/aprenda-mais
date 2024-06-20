@@ -1,0 +1,22 @@
+.lesson {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 10px;
+    border-bottom: 1px solid #666;
+  }
+  
+  .lesson span {
+    font-size: 1em;
+  }
+  
+  .status {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background-color: white;
+  }
+  
+  .status.completed {
+    background-color: green;
+  }
+  

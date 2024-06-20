@@ -1,11 +1,14 @@
+import React, { useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import swal from 'sweetalert';
+
+import Typebot from '../../components/ChatBot/TypeBot';
+import SideTitle from '../../components/SideTitle/SideTitle';
 import '../Login/login.css';
 
-import { Link, useNavigate } from 'react-router-dom';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
 import { IoHelpCircle } from "react-icons/io5";
-import SideTitle from '../../components/SideTitle/SideTitle';
-import swal from 'sweetalert';
 
 const Login = () => {
 
@@ -115,6 +118,7 @@ const Login = () => {
             <p className='cadastro-link'>Não tem usuário? <Link to={'/cadastro'}>Cadastre-se</Link></p>
           </form>
         </div>
+        <Typebot />
       </section>
     </div>
   )

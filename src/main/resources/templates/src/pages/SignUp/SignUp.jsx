@@ -7,6 +7,7 @@ import InputMask from '../../functions/inputMask';
 import { IoHelpCircle } from "react-icons/io5";
 import { Link } from 'react-router-dom';
 import SideTitle from '../../components/SideTitle/SideTitle';
+import Typebot from '../../components/ChatBot/TypeBot';
 import { useForm } from "react-hook-form";
 
 const SignUp = () => {
@@ -487,6 +488,7 @@ const SignUp = () => {
           </form>
 
         </div>
+        <Typebot />
       </section>
     </div>
 

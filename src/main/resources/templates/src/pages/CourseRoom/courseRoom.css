@@ -1,0 +1,18 @@
+.course-room-container {
+    display: flex;
+    height: 100vh;
+    color: white;
+}
+
+.modules-list-column {
+    /* No flex desta coluna, quando estava sem o video o valor era 0.3 */
+    flex: 1; 
+    overflow-y: auto;
+    padding: 20px;
+    background-color: #161616;
+}
+
+.content-column {
+    overflow-y: auto;
+    padding: 20px;
+}

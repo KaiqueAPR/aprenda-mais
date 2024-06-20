@@ -1,0 +1,30 @@
+.module {
+    background-color: #3c3c3c;
+    color: white;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    overflow: hidden;
+  }
+  
+  .module-header {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    cursor: pointer;
+    background-color: #666;
+  }
+  
+  .module-content {
+    padding: 10px;
+    background-color: #555;
+  }
+  
+  .module-header h2 {
+    margin: 0;
+    font-size: 1.2em;
+  }
+  
+  .module-header span {
+    font-size: 1.2em;
+  }
+  

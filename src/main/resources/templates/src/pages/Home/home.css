@@ -23,10 +23,49 @@ body {
 
 .courses-carousel-title {
     font-size: 25px;
+    margin-bottom: 20px;
 }
 
 .courses-list {
     display: flex;
-    align-items: center;justify-content: space-around;
+    align-items: center;
+    justify-content: space-around;
     height: 150px;
+}
+
+.arrowIconStyles {
+    width: 50px;
+    height: 50px;
+}
+
+@media (max-width: 1180px){
+
+    .home-container {
+        height: 100%;
+    }
+
+    .user-hello {
+        font-size: 40px;
+        text-align: center;
+    }
+
+    .arrowIconStyles {
+        display: none;
+    }
+
+    .courses-carousel-title {
+        display: block;
+        text-align: center;
+        font-size: 30px;
+        margin: 30px 0;
+    }
+
+    .courses-list {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 30px;
+        width: 100%;
+        height: 100%;
+    }
 }
